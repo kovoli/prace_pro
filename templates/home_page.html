@@ -4,23 +4,23 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-lg-9 order-1 article-section shadow mb-5">
+            <div class="col-lg-9 order-1 article-section mb-5">
                 {% for deal in deals %}
                 <article class="deal-section my-3">
-                    <div class="row position-relative my-2">
+                    <div class="row my-2">
                         <div class="col-md-4">
                             <div class="product-box__image">
                                 {% if deal.image %}
-                                    <img src="{{ deal.image.url }}" alt="{{ deal.name }}" class="img-fluid">
+                                    <a href="{{ deal.get_absolute_url }}"><img src="{{ deal.image.url }}" alt="{{ deal.name }}" class="img-fluid"></a>
                                 {% else %}
-                                    <img src="http://placehold.it/250x250" alt="product image" class="img-fluid">
+                                    <a href="{{ deal.get_absolute_url }}"><img src="http://placehold.it/250x250" alt="product image" class="img-fluid"></a>
                                 {% endif %}
                             </div>
-                            <button type="button" class="btn btn-outline-own my-2 stretched-link"><a href="#">К скидке <i class="fas fa-external-link-alt"></i></a></button>
+                            <button type="button" class="btn btn-outline-own my-2"><a href="{{ deal.link_to_shop }}" target="_blank">К скидке <i class="fas fa-external-link-alt"></i></a></button>
                         </div>
                         <div class="col-md-8">
                             <div class="product-box__desc">
-                                <a href="single-product.html" class="product-box__title ">{{ deal.name }}</a>
+                                <a href="{{ deal.get_absolute_url }}" class="product-box__title ">{{ deal.name }}</a>
                                 <div class="mb-2">
                                     <span class="sale-price">{{ deal.price }} <i class="fas fa-ruble-sign"></i></span>
                                     <span class="regular-price">{{ deal.oldprice }} <i class="fas fa-ruble-sign"></i></span>
@@ -29,7 +29,9 @@
                                 <div class="mb-2 pb-2 border-bottom d-flex">
                                     <span class="author-deal flex-fill"><a href="#"> <i class="fas fa-user-edit"></i> kovoli</a></span>
                                     <span class="deal-post-date flex-fill"><i class="far fa-calendar-alt"></i> 12.01.2012 (20:00)</span>
-                                    <span class="deal-comments ml-3 flex-fill"><a href="#"><i class="far fa-comments"></i> (5)</a></span>
+                                    {% with comments.count as total_comments %}
+                                        <span class="deal-comments ml-3 flex-fill"><a href="#"><i class="far fa-comments"></i> ({{ total_comments }})</a></span>
+                                    {% endwith %}
                                 </div>
                                 <div>
                                     <span></span>
@@ -48,11 +50,9 @@
                     <h3>Категории</h3>
                 </div>
                 <ul class="list-group list-group-flush">
-                  <li class="list-group-item"><a href="#">Cras justo odio</a></li>
-                  <li class="list-group-item">Dapibus ac facilisis in</li>
-                  <li class="list-group-item">Morbi leo risus</li>
-                  <li class="list-group-item">Porta ac consectetur ac</li>
-                  <li class="list-group-item">Vestibulum at eros</li>
+                    {% for category in categories %}
+                      <li class="list-group-item"><a href="{# category.get_absolute_url #}">{{ category.name }}</a></li>
+                    {% endfor %}
                 </ul>
                 </div>
                 <!-- Hot Deals -->

@@ -15,7 +15,7 @@
                                 <img src="http://placehold.it/250x250" alt="product image" class="img-fluid">
                                 {% endif %}
                             </div>
-                            <button type="button" class="btn btn-outline-own my-2"><a href="#" target="_blank">К скидке <i class="fas fa-external-link-alt"></i></a></button>
+                            <button type="button" class="btn btn-outline-own my-2"><a href="{{ deal.link_to_shop }}" target="_blank">К скидке <i class="fas fa-external-link-alt"></i></a></button>
                         </div>
                         <div class="col-md-8">
                             <div class="product-box__desc">
@@ -29,7 +29,9 @@
                                 <div class="mb-2 pb-2 d-flex">
                                     <span class="author-deal flex-fill"><a href="#"> <i class="fas fa-user-edit"></i> {{ deal.author }}</a></span>
                                     <span class="deal-post-date flex-fill"><i class="far fa-calendar-alt"></i> {{ deal.create|date:"d.m.Y (H:i)" }}</span>
-                                    <span class="deal-comments flex-fill"><a href="#"><i class="far fa-comments"></i> (5)</a></span>
+                                    {% with comments.count as total_comments %}
+                                        <span class="deal-comments ml-3 flex-fill"><a href="#"><i class="far fa-comments"></i> ({{ total_comments }})</a></span>
+                                    {% endwith %}
                                 </div>
                                 <div>
                                     <span></span>
@@ -45,6 +47,7 @@
                     </div>
                 </article>
                 <article class="deal-section-single deal-comments p-3 mb-3">
+                {% for comment in comments %}
                     <div class="row">
                         <div class="col-md-1">
                             <div class="product-box__image">
@@ -52,13 +55,13 @@
                             </div>
                         </div>
                         <div class="col-md-11">
-                            <span class="author-deal flex-fill"><a href="#"> <i class="fas fa-user-edit"></i> kovoli</a></span>
+                            <span class="author-deal flex-fill"><a href="#"> <i class="fas fa-user-edit"></i> {{ comment.author.username }}</a></span>
                             <div class="comment-text">
-                                <p>hdvahdkjvhapudhvpa</p>
+                                {{ comment.body|safe }}
                             </div>
                         </div>
                     </div>
-
+                {% endfor %}
                 </article>
                 <article class="deal-section-single deal-comments p-3">
                         <div class="col-md-12">
@@ -85,10 +88,9 @@
                     <h3>Категории</h3>
                 </div>
                 <ul class="list-group list-group-flush">
-                  {% for cat in category %}
-                  <li class="list-group-item"><a href="#">{{ cat.name }}</a></li>
+                  {% for category in categories %}
+                    <li class="list-group-item"><a href="#">{{ category.name }}</a></li>
                   {% endfor %}
-
                 </ul>
                 </div>
                 <!-- Hot Deals -->

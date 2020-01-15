@@ -115,7 +115,6 @@ class Deal(models.Model):
     description = RichTextField(blank=True, null=True)
     create = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     price = models.DecimalField(decimal_places=2, max_digits=10)
     oldprice = models.DecimalField(decimal_places=2, max_digits=10, blank=True, null=True)
     discount_procent = models.IntegerField(blank=True, null=True)
@@ -130,6 +129,7 @@ class Deal(models.Model):
                                 max_length=250)
 
     # Related fields
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     category = TreeForeignKey('Category', related_name='products', on_delete=models.CASCADE)
     brand = models.ForeignKey('Brand', related_name='brands', null=True, blank=True, on_delete=models.SET_NULL)
     shop = models.ForeignKey('Shop', related_name='shop', null=True, blank=True, on_delete=models.SET_NULL)
@@ -151,4 +151,20 @@ class Deal(models.Model):
         super(Deal, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return reverse('deals:product_detail', args=[self.slug])
+        return reverse('deals:deal_detail', args=[self.slug])
+
+
+class Comment(models.Model):
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    body = RichTextField()
+    created = models.DateTimeField(auto_now_add=True)
+    deal = models.ForeignKey(Deal, related_name='comments', on_delete=models.CASCADE)
+    active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.author.username
+
+    class Meta:
+        ordering = ['-created']
+        verbose_name = 'Комментарий'
+        verbose_name_plural = 'Коментарии'

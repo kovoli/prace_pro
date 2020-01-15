@@ -114,6 +114,7 @@ a:hover {
 /* Deals List */
 .article-section {
     border-radius: 1rem;
+    box-shadow: 0 0 1rem rgba(0,0,0,.15);
 }
 .deal-section:not(:last-child) {
     border-bottom: 3px solid rgba(204, 204, 204, 0.56);
