@@ -29,9 +29,8 @@
                                 <div class="mb-2 pb-2 border-bottom d-flex">
                                     <span class="author-deal flex-fill"><a href="#"> <i class="fas fa-user-edit"></i> kovoli</a></span>
                                     <span class="deal-post-date flex-fill"><i class="far fa-calendar-alt"></i> 12.01.2012 (20:00)</span>
-                                    {% with comments.count as total_comments %}
-                                        <span class="deal-comments ml-3 flex-fill"><a href="#"><i class="far fa-comments"></i> ({{ total_comments }})</a></span>
-                                    {% endwith %}
+                                    <span class="deal-comments ml-3 flex-fill"><a href="#"><i class="far fa-comments"></i> ({{ deal.comments.count }})</a></span>
+
                                 </div>
                                 <div>
                                     <span></span>

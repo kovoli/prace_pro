@@ -46,39 +46,51 @@
                         Share links | Beitrag melden
                     </div>
                 </article>
-                <article class="deal-section-single deal-comments p-3 mb-3">
                 {% for comment in comments %}
+                <article class="deal-section-single deal-comments p-3 mb-1">
                     <div class="row">
-                        <div class="col-md-1">
-                            <div class="product-box__image">
-                                <img src="http://placehold.it/250x250" alt="product image" class="img-fluid rounded-circle">
+                        <div class="col-md-12">
+                            <div class="comment-box__image border-bottom pb-1">
+                                <img src="http://placehold.it/50x50" alt="product image" class="img-fluid rounded-circle">
+                                <span class="author-deal ml-2"><a href="#">{{ comment.author.username }}</a></span>
+                            <span class="deal-post-date ml-4"><i class="far fa-calendar-alt"></i> {{ comment.created|date:"d.m.Y" }}</span>
                             </div>
-                        </div>
-                        <div class="col-md-11">
-                            <span class="author-deal flex-fill"><a href="#"> <i class="fas fa-user-edit"></i> {{ comment.author.username }}</a></span>
-                            <div class="comment-text">
+                            <div class="comment-text pt-2">
                                 {{ comment.body|safe }}
                             </div>
                         </div>
                     </div>
-                {% endfor %}
                 </article>
-                <article class="deal-section-single deal-comments p-3">
+                {% empty %}
+                    <article class="deal-section-single deal-comments p-3 mb-1">
+                    <div class="row">
                         <div class="col-md-12">
-                            <p>Твоё мнение:</p>
-                            <div class="row">
-                                <div class="form__group col-12">
-                                    <textarea class="form__input form__input--textarea" id="comment_message" style="margin-top: 0px; margin-bottom: 0px; height: 166px;"></textarea>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12">
-                                    <button type="submit" class="btn comment-btn">Submit</button>
-                                </div>
+                            <div class="not_comments text-center">
+                                <span><i class="fas fa-comment-slash"></i> Что ты думаеш о {{ deal.name }}</span>
                             </div>
                         </div>
-
-
+                    </div>
+                </article>
+                {% endfor %}
+                <article class="deal-section-single deal-comments p-3">
+                        <div class="col-md-12">
+                        {% if new_comment %}
+                            <h2>Твой комментарий был опубликован!</h2>
+                        {% else %}
+                            <p>Твоё мнение:</p>
+                            <div class="row">
+                            <div class="form__group col-12">
+                               {% if user.is_authenticated %}
+                               <form action="." method="post">
+                                    {{ comment_form.body }}
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn comment-btn">Submit</button>
+                                </form>
+                                {% endif%}
+                             </div>
+                            </div>
+                        {% endif %}
+                        </div>
                 </article>
             </div>
             <aside class="col-lg-3 order-2">
