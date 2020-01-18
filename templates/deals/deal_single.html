@@ -49,11 +49,12 @@
                 {% for comment in comments %}
                 <article class="deal-section-single deal-comments p-3 mb-1">
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-12" data-id="{{ comment.id }}">
                             <div class="comment-box__image border-bottom pb-1">
                                 <img src="http://placehold.it/40x40" alt="product image" class="img-fluid rounded-circle">
                                 <span class="author-deal ml-2"><a href="#">{{ comment.author.username }}</a></span>
-                            <span class="deal-post-date ml-2"><i class="far fa-clock"></i> {{ comment.created|timesince }} <small class="text-muted">назад</small> </span>
+                                <span class="deal-post-date ml-2"><i class="far fa-clock"></i> {{ comment.created|timesince }} <small class="text-muted">назад</small> </span>
+                                <a class="like_comment float-right" data-id="{{ comment.id }}" href="#"><i class="far fa-thumbs-up"></i> <span class="counter_like_{{ comment.id }}">{{ comment.like }}</span></a>
                             </div>
                             <div class="comment-text pt-2">
                                 {{ comment.body|safe }}
@@ -80,13 +81,13 @@
                             <p>Твоё мнение:</p>
                             <div class="row">
                             <div class="form__group col-12">
-                               {% if user.is_authenticated %}
+
                                <form action="." method="post">
                                     {{ comment_form.body }}
                                     {% csrf_token %}
                                     <button type="submit" class="btn comment-btn">Submit</button>
                                 </form>
-                                {% endif%}
+
                              </div>
                             </div>
                         {% endif %}

@@ -10,7 +10,7 @@ from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFit
 from mptt.models import MPTTModel, TreeForeignKey
 from django.contrib.auth.models import User
-
+from django.conf import settings
 
 class Shop(models.Model):
     name = models.CharField(max_length=255)
@@ -155,14 +155,15 @@ class Deal(models.Model):
 
 
 class Comment(models.Model):
-    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
     body = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
     deal = models.ForeignKey(Deal, related_name='comments', on_delete=models.CASCADE)
     active = models.BooleanField(default=True)
+    like = models.PositiveIntegerField(default=0)
 
-    def __str__(self):
-        return self.author.username
+    # def __str__(self):
+    #     return self.author.username
 
     class Meta:
         ordering = ['-created']
@@ -170,10 +171,10 @@ class Comment(models.Model):
         verbose_name_plural = 'Коментарии'
 
 
-class Comment_like(models.Model):
-    comment = models.ForeignKey(Comment, on_delete=models.CASCADE, null=True, related_name='comments')
-    comments_counter = models.PositiveIntegerField(default=0)
-
-    class Meta:
-        verbose_name = 'Like'
-        verbose_name_plural = 'Likes'
+# class Comment_like(models.Model):
+#     comment = models.ForeignKey(Comment, on_delete=models.CASCADE, null=True, related_name='comments')
+#     comments_counter = models.PositiveIntegerField(default=0)
+#
+#     class Meta:
+#         verbose_name = 'Like'
+#         verbose_name_plural = 'Likes'
