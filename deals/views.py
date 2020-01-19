@@ -3,16 +3,18 @@ from .models import Deal, Category, Brand, Shop, Comment
 from django.http import HttpResponse, JsonResponse
 from .forms import CommentForm
 import json
+from . import helpers
 from django.db.models import F
 from django.contrib.auth.decorators import login_required
-
+from django.views.decorators.http import require_POST
 
 
 def home_page(request):
     deals = Deal.objects.all()
     categories = Category.objects.root_nodes()
+    deals_list = helpers.pg_records(request, deals, 2)
 
-    context = {'deals': deals, 'categories': categories}
+    context = {'deals_list': deals_list, 'categories': categories}
     return render(request, 'home_page.html', context)
 
 
@@ -23,12 +25,11 @@ def deal_single(request, slug):
     categories = Category.objects.root_nodes()
     # Комментраии
     comments = deal.comments.filter(active=True)
-
     # Форма для комментариев
     new_comment = None
 
     if request.method == 'POST':
-        comment_form = CommentForm(request.POST)
+        comment_form = CommentForm(data=request.POST or None)
         if comment_form.is_valid():
             new_comment = comment_form.save(commit=False)
             new_comment.deal = deal
@@ -47,19 +48,21 @@ def deal_single(request, slug):
 
 
 #@login_required
+@require_POST
 def like_comment(request):
-    if request.is_ajax() and request.POST:
-        object_id = request.POST.get('id', None)
-        comment = get_object_or_404(Comment, id=object_id)
+    object_id = request.POST.get('id', None)
+    if request.is_ajax() and request.POST and object_id:
+        request.session.set_expiry(180)
         num_click = request.session.get('click', 0)
-        #object = request.session['object_id'] = [object_id, False]
         if num_click == 0:
+            comment = get_object_or_404(Comment, id=object_id)
             comment.like = F('like') + 1
             comment.save()
             comment.refresh_from_db(fields=['like'])
             request.session['click'] = num_click + 1
             data = {'comment': comment.like, 'id': f"{comment.id}"}
         else:
+            comment = get_object_or_404(Comment, id=object_id)
             comment.like = F('like') - 1
             comment.save()
             comment.refresh_from_db(fields=['like'])
