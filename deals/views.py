@@ -60,6 +60,7 @@ def like_comment(request):
         comment.save()
         comment.refresh_from_db(fields=['like'])
         data = {'comment': comment.like, 'id': f"{comment.id}"}
+        print(request.session['click'])
         return HttpResponse(json.dumps(data), content_type='application/json')
     else:
         return JsonResponse({'error': 'Only aasdfa'}, status=404)

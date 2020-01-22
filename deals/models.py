@@ -12,6 +12,7 @@ from mptt.models import MPTTModel, TreeForeignKey
 from django.contrib.auth.models import User
 from django.conf import settings
 
+
 class Shop(models.Model):
     name = models.CharField(max_length=255)
     slug = models.SlugField(max_length=255, unique=True)
@@ -166,7 +167,7 @@ class Comment(models.Model):
     #     return self.author.username
 
     class Meta:
-        ordering = ['-created']
+        ordering = ['created']
         verbose_name = 'Комментарий'
         verbose_name_plural = 'Коментарии'
 
