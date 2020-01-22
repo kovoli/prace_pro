@@ -192,3 +192,13 @@ a:hover {
     color: #fff;
     background-color: #1d629a;
 }
+
+/* Pagination */
+.page-item.active .page-link {
+    color: #fff;
+    background-color: #145595;
+    border-color: #ffffff;
+}
+.page-link {
+    color: #145595;
+}

@@ -7,6 +7,7 @@ from . import helpers
 from django.db.models import F
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
+from .click import ClickComment
 
 
 def home_page(request):
@@ -28,6 +29,7 @@ def deal_single(request, slug):
     # Форма для комментариев
     new_comment = None
 
+    print(request.session.values())
     if request.method == 'POST':
         comment_form = CommentForm(data=request.POST or None)
         if comment_form.is_valid():
@@ -46,56 +48,20 @@ def deal_single(request, slug):
 
     return render(request, 'deals/deal_single.html', context)
 
-
-#@login_required
+# TODO set crontab to delete expired sessions
 @require_POST
 def like_comment(request):
     object_id = request.POST.get('id', None)
+    click = ClickComment(request)
     if request.is_ajax() and request.POST and object_id:
-        request.session.set_expiry(180)
-        num_click = request.session.get('click', 0)
-        if num_click == 0:
-            comment = get_object_or_404(Comment, id=object_id)
-            comment.like = F('like') + 1
-            comment.save()
-            comment.refresh_from_db(fields=['like'])
-            request.session['click'] = num_click + 1
-            data = {'comment': comment.like, 'id': f"{comment.id}"}
-        else:
-            comment = get_object_or_404(Comment, id=object_id)
-            comment.like = F('like') - 1
-            comment.save()
-            comment.refresh_from_db(fields=['like'])
-            request.session['click'] = num_click - 1
-            data = {'comment': comment.like, 'id': f"{comment.id}"}
+        comment = get_object_or_404(Comment, id=object_id)
+        click.action_click(comment_id=comment.id)
+        comment.like = F('like') + int(request.session['click'][str(object_id)])
+        comment.save()
+        comment.refresh_from_db(fields=['like'])
+        data = {'comment': comment.like, 'id': f"{comment.id}"}
         return HttpResponse(json.dumps(data), content_type='application/json')
     else:
         return JsonResponse({'error': 'Only aasdfa'}, status=404)
 
 
-
-# def like(request, pk):
-#     obj = Article.objects.get(pk=pk)
-#     try:
-#         likedislike = LikeDislike.objects.get(content_type=ContentType.objects.get_for_model(obj), object_id=obj.id,
-#                                               user=request.user)
-#         if likedislike.vote is not LikeDislike.LIKE:
-#             likedislike.vote = LikeDislike.LIKE
-#             likedislike.save(update_fields=['vote'])
-#             result = True
-#         else:
-#             likedislike.delete()
-#             result = False
-#     except LikeDislike.DoesNotExist:
-#         obj.votes.create(user=request.user, vote=LikeDislike.LIKE)
-#         result = True
-#
-#     return HttpResponse(
-#         json.dumps({
-#             "result": result,
-#             "like_count": obj.votes.likes().count(),
-#             "dislike_count": obj.votes.dislikes().count(),
-#             "sum_rating": obj.votes.sum_rating()
-#         }),
-#         content_type="application/json"
-#     )

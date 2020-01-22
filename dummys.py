@@ -61,7 +61,7 @@ def deals_dummy(n):
         
 
 
-#category_dummy(5)
-#hop_dummy(5)
-#brand_dummy(5)
+category_dummy(5)
+shop_dummy(5)
+brand_dummy(5)
 deals_dummy(100)

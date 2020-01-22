@@ -41,31 +41,9 @@
                     </div>
                 </article>
                 {% endfor %}
-                {% if deals_list.has_other_pages %}
-<div class="">
-  <ul class="pagination">
-    {% if deals_list.has_previous %}
-      <li class="page-item"><a class="page-link" href="?page=1"><i class="fas fa-angle-double-left"></i></a></li>
-      <li class="page-item"><a class="page-link" href="?page={{ deals_list.previous_page_number }}"><i class="fas fa-angle-left"></i></a></li>
-    {% endif %}
-    {% for i in deals_list.paginator.page_range %}
 
-      {% if deals_list.number == i %}
-      	<li class="page-item active" aria-current="page">
-      	<a class="page-link">{{ i }}</a>
-      	</li>
-      {% elif i|add:"-4" <= deals_list.number and deals_list.number <= i|add:"3" %}
-      	<li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
-      {% endif %}
-    {% endfor %}
+                {% include 'deals/includes/pagination.html' %}
 
-    {% if deals_list.has_next %}
-      <li class="page-item"><a class="page-link" href="?page={{ deals_list.next_page_number }}"><i class="fas fa-angle-right"></i></a></li>
-      <li class="page-item"><a class="page-link" href="?page={{ deals_list.paginator.num_pages }}"><i class="fas fa-angle-double-right"></i></a></li>
-    {% endif %}
-  </ul>
-</div>
-{% endif %}
             </div>
             <aside class="col-lg-3 order-2">
                 <!-- Category -->
