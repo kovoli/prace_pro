@@ -171,11 +171,3 @@ class Comment(models.Model):
         verbose_name = 'Комментарий'
         verbose_name_plural = 'Коментарии'
 
-
-# class Comment_like(models.Model):
-#     comment = models.ForeignKey(Comment, on_delete=models.CASCADE, null=True, related_name='comments')
-#     comments_counter = models.PositiveIntegerField(default=0)
-#
-#     class Meta:
-#         verbose_name = 'Like'
-#         verbose_name_plural = 'Likes'

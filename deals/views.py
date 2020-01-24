@@ -13,7 +13,7 @@ from .click import ClickComment
 def home_page(request):
     deals = Deal.objects.all()
     categories = Category.objects.root_nodes()
-    deals_list = helpers.pg_records(request, deals, 2)
+    deals_list = helpers.pg_records(request, deals, 20)
 
     context = {'deals_list': deals_list, 'categories': categories}
     return render(request, 'home_page.html', context)

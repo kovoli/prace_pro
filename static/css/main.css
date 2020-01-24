@@ -137,6 +137,25 @@ a:hover {
     background-color: #FB7623;
     border-color: #ffffff;
 }
+.btn-sm {
+    line-height: .8;
+}
+.btn-minus {
+    background-color: #155596;
+    color: #ffffff;
+}
+.btn-minus:hover {
+    background-color: #216b96;
+    color: #ffffff;
+}
+.btn-plus {
+    background-color: #FF0000;
+    color: #ffffff;
+}
+.btn-plus:hover {
+    background-color: #ff5244;
+    color: #ffffff;
+}
 .product-box__title {
     font-size: 1.6rem;
     font-weight: 600;
@@ -191,6 +210,7 @@ a:hover {
 .comment-btn:hover {
     color: #fff;
     background-color: #1d629a;
+    border: 0;
 }
 
 /* Pagination */
