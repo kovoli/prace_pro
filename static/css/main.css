@@ -156,6 +156,13 @@ a:hover {
     background-color: #ff5244;
     color: #ffffff;
 }
+.progress-bar {
+    background: rgb(21,85,150);
+    background: linear-gradient(90deg, rgba(21,85,150,1) 0%, rgba(33,107,150,1) 28%, rgba(255,0,0,1) 100%);
+}
+.like-counter {
+    width: 5rem;
+}
 .product-box__title {
     font-size: 1.6rem;
     font-weight: 600;
