@@ -102,7 +102,7 @@ class Category(MPTTModel):
         super(Category, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return reverse('deals:category', args=[self.slug])
+        return reverse('deals:deals_by_category', args=[self.slug])
 
 
 class Deal(models.Model):
@@ -128,9 +128,13 @@ class Deal(models.Model):
                                 options={'quality': 80},
                                 blank=True,
                                 max_length=250)
+    # user likes
+    user_like = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='user_like', blank=True)
+    like_counter = models.SmallIntegerField(default=0)
 
     # Related fields
-    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL,
+                               null=True, related_name='deal_author')
     category = TreeForeignKey('Category', related_name='products', on_delete=models.CASCADE)
     brand = models.ForeignKey('Brand', related_name='brands', null=True, blank=True, on_delete=models.SET_NULL)
     shop = models.ForeignKey('Shop', related_name='shop', null=True, blank=True, on_delete=models.SET_NULL)
@@ -153,6 +157,12 @@ class Deal(models.Model):
 
     def get_absolute_url(self):
         return reverse('deals:deal_detail', args=[self.slug])
+
+
+# class LikeDislike(models.Model):
+#     deal = models.ForeignKey(Deal, on_delete=models.CASCADE, related_name='likes')
+#     user_like = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='user_like', blank=True)
+#     like_counter = models.SmallIntegerField(default=0)
 
 
 class Comment(models.Model):

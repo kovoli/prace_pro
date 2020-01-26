@@ -129,7 +129,7 @@ a:hover {
     border-color: #fa641e;
     width: 100%;
 }
-.btn-outline-own a {
+a .btn-outline-own  {
     color: #ffffff;
 }
 .btn-outline-own:hover {

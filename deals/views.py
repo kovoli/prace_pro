@@ -7,8 +7,8 @@ from . import helpers
 from django.db.models import F
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
-from .click import ClickComment
-
+from .click import ClickComment, ClickDeal
+from common.decorators import ajax_required
 
 def home_page(request):
     deals = Deal.objects.all()
@@ -29,7 +29,6 @@ def deal_single(request, slug):
     # Форма для комментариев
     new_comment = None
 
-    print(request.session.values())
     if request.method == 'POST':
         comment_form = CommentForm(data=request.POST or None)
         if comment_form.is_valid():
@@ -48,21 +47,93 @@ def deal_single(request, slug):
 
     return render(request, 'deals/deal_single.html', context)
 
+
+def deals_by_category(request, slug):
+    category = get_object_or_404(Category, slug=slug)
+    categories = category.get_descendants().order_by('tree_id', 'id', 'name')
+    deals = Deal.objects.filter(category__in=category.get_descendants(include_self=True))
+    print(categories)
+    deals_list = helpers.pg_records(request, deals, 20)
+
+    content = {'category': category, 'deals_list': deals_list, 'categories': categories}
+    return render(request, 'deals/deal_cat_list.html', content)
+
+
 # TODO set crontab to delete expired sessions
+# @login_required
 @require_POST
+@ajax_required
 def like_comment(request):
     object_id = request.POST.get('id', None)
     click = ClickComment(request)
-    if request.is_ajax() and request.POST and object_id:
+    if object_id:
         comment = get_object_or_404(Comment, id=object_id)
         click.action_click(comment_id=comment.id)
         comment.like = F('like') + int(request.session['click'][str(object_id)])
         comment.save()
         comment.refresh_from_db(fields=['like'])
-        data = {'comment': comment.like, 'id': f"{comment.id}"}
-        print(request.session['click'])
+        data = {'comment': comment.like, 'id': comment.id}
         return HttpResponse(json.dumps(data), content_type='application/json')
     else:
         return JsonResponse({'error': 'Only aasdfa'}, status=404)
 
+
+# @login_required
+@require_POST
+@ajax_required
+def like_deal(request):
+    deal_id = request.POST.get('id', None)
+    like_deal = ClickDeal(request)
+    if deal_id:
+        if not request.user.is_anonymous:  # Если пользователь в системе
+            deal = get_object_or_404(Deal, id=deal_id)
+            like_deal.action_click(deal_id=deal.id)
+            deal.like_counter = F('like_counter') + 1
+            deal.user_like.add(request.user)
+            deal.save()
+            deal.refresh_from_db(fields=['like_counter'])
+            ses = request.session['click_deal']
+            data = {'deal_counter': deal.like_counter, 'id': deal.id, 'session_data': ses}
+            return JsonResponse(data)
+        else:
+            deal = get_object_or_404(Deal, id=deal_id)
+            like_deal.action_click(deal_id=deal.id)
+            deal.like_counter = F('like_counter') + 1
+            deal.save()
+            deal.refresh_from_db(fields=['like_counter'])
+            ses = request.session['click_deal']
+            data = {'deal_counter': deal.like_counter, 'id': deal.id, 'session_data': ses}
+            print(data['session_data'][str(deal.id)])
+            return HttpResponse(json.dumps(data), content_type='application/json')
+    else:
+        return JsonResponse({'error': 'error'}, status=404)
+
+@require_POST
+@ajax_required
+def dislike_deal(request):
+    deal_id = request.POST.get('id', None)
+    like_deal = ClickDeal(request)
+    if deal_id:
+        if not request.user.is_anonymous:  # Если пользователь в системе
+            deal = get_object_or_404(Deal, id=deal_id)
+            like_deal.action_click(deal_id=deal.id)
+            deal.like_counter = F('like_counter') - 1
+            deal.user_like.add(request.user)
+            deal.save()
+            deal.refresh_from_db(fields=['like_counter'])
+            ses = request.session['click_deal']
+            data = {'deal_counter': deal.like_counter, 'id': deal.id, 'session_data': ses}
+            print(request.session['click_deal'])
+            return JsonResponse(data)
+        else:
+            deal = get_object_or_404(Deal, id=deal_id)
+            like_deal.action_click(deal_id=deal.id)
+            deal.like_counter = F('like_counter') - 1
+            deal.save()
+            deal.refresh_from_db(fields=['like_counter'])
+            ses = request.session['click_deal']
+            data = {'deal_counter': deal.like_counter, 'id': deal.id, 'session_data': ses}
+            return HttpResponse(json.dumps(data), content_type='application/json')
+    else:
+        return JsonResponse({'error': 'error'}, status=404)
 

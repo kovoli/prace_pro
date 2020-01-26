@@ -4,101 +4,103 @@
 {% block content %}
     <div class="container">
         <div class="row">
+            <div class="col-lg-9 order-1 article-section mb-5">
+                {% for deal in deals_list %}
+                <article class="deal-section my-3">
+                    <div class="row my-2">
+                        <div class="col-md-4">
+                            <div class="product-box__image">
+                                {% if deal.image %}
+                                    <a href="{{ deal.get_absolute_url }}"><img src="{{ deal.image.url }}" alt="{{ deal.name }}" class="img-fluid"></a>
+                                {% else %}
+                                    <a href="{{ deal.get_absolute_url }}"><img src="http://placehold.it/250x250" alt="product image" class="img-fluid"></a>
+                                {% endif %}
+                            </div>
+                            <a href="{{ deal.link_to_shop }}" target="_blank"><button type="button" class="btn btn-outline-own my-2">К скидке <i class="fas fa-external-link-alt"></i></button></a>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="product-box__desc">
+                                <div class="d-flex flex-row justify-content-center p-1" >
+                            {% with click_counter=deal.like_counter session=request.session.click_deal deal_id=deal.id|stringformat:"i" %}
+                                <div class="d-flex flex-colum justify-content-between">
+                                    <button class="btn-like-{{ deal_id }} btn btn-sm btn-minus focus shadow-none dislike" data-id="{{ deal.id }}" {% if deal_id in session %}disabled{% endif %}><i class="fas fa-minus"></i></button>
+                                </div>
+                                <div class="d-block w-100 mx-1">
+                                    <div class="progress h-100">
+                                        <div id="progress-bar-{{ deal.id }}" class="progress-bar" role="progressbar" style="width: {{ click_counter }}0%" aria-valuenow="{{ click_counter }}" aria-valuemin="0" aria-valuemax="10"></div>
+                                    </div>
+                                </div>
+                                    <div class="d-flex flex-colum justify-content-between">
+                                        <button class="btn-like-{{ deal_id }} btn btn-sm btn-plus focus shadow-none like"  data-id="{{ deal.id }}" {% if deal_id in session %}disabled{% endif %}><i class="fas fa-plus"></i></button>
+                                    </div>
+                                    <div class="d-flex flex-colum justify-content-between ml-1 rounded like-counter border">
+                                        <span class="mx-auto counter_like_deal_{{ deal.id }}">{{ click_counter }}</span>
+                                    </div>
+                                {% endwith %}
+                            </div>
+                                <a href="{{ deal.get_absolute_url }}" class="product-box__title ">{{ deal.name }}</a>
+                                <div class="mb-2">
+                                    <span class="sale-price">{{ deal.price }} <i class="fas fa-ruble-sign"></i></span>
+                                    <span class="regular-price">{{ deal.oldprice }} <i class="fas fa-ruble-sign"></i></span>
+                                    <span class="product-box__sticker">{{ deal.discount_procent }}%</span>
+                                </div>
+                                <div class="mb-2 pb-2 border-bottom d-flex">
+                                    <span class="author-deal flex-fill"><a href="#"> <i class="fas fa-user-edit"></i> kovoli</a></span>
+                                    <span class="deal-post-date flex-fill"><i class="far fa-calendar-alt"></i> 12.01.2012 (20:00)</span>
+                                    <span class="deal-comments ml-3 flex-fill"><a href="{{ deal.get_absolute_url }}#comment-area"><i class="far fa-comments"></i> ({{ deal.comments.count }})</a></span>
+                                </div>
+                                <div>
+                                    <span></span>
+                                </div>
+                                <p class="product-box__short-desc">Faded short sleeves t-shirt with high neckline. Soft and stretchy material for a comfortable fit. Accessorize with a straw hat and you're ready for summer!</p>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+                {% endfor %}
+
+                {% include 'deals/includes/pagination.html' %}
+
+            </div>
             <aside class="col-lg-3 order-2">
                 <!-- Category -->
                 <div class="category-sidebar">
-                <div class="section-title section-title--3 ">
-                    <h3>Категории</h3>
-                </div>
-                <ul class="list-group list-group-flush">
-                  <li class="list-group-item"><a href="#">Cras justo odio</a></li>
-                  <li class="list-group-item">Dapibus ac facilisis in</li>
-                  <li class="list-group-item">Morbi leo risus</li>
-                  <li class="list-group-item">Porta ac consectetur ac</li>
-                  <li class="list-group-item">Vestibulum at eros</li>
-                </ul>
+                    <div class="section-title section-title--3 ">
+                        <h3>Категории</h3>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        {% for category in categories %}
+                          <li class="list-group-item"><a href="{{ category.get_absolute_url }}">{{ category.name }}</a></li>
+                        {% endfor %}
+                    </ul>
                 </div>
                 <!-- Hot Deals -->
                 <div class="deals-slide_sidebar mt-3">
-                <div class="section-title section-title--3 mb-2">
-                    <h3>Похожие</h3>
-                </div>
-                    <div class="single-recent-post d-flex align-items-center">
-                        <a href="" class="single-recent-post__thumb">
-                            <img src="http://placehold.it/60x60" alt="Blog Thumb">
-                        </a>
-                        <div class="single-recent-post__content">
-                            <a href="" class="single-recent-post__title">This Is Second Post For XipBlog</a>
-                            <a href="" class="single-recent-post__date">26 September, 2018</a>
-                        </div>
-
+                    <div class="section-title section-title--3 mb-2">
+                        <h3>Похожие</h3>
                     </div>
-                    <div class="single-recent-post d-flex align-items-center">
-                        <a href="" class="single-recent-post__thumb">
-                            <img src="http://placehold.it/60x60" alt="Blog Thumb">
-                        </a>
-                        <div class="single-recent-post__content">
-                            <a href="" class="single-recent-post__title">This Is Second Post For XipBlog</a>
-                            <a href="" class="single-recent-post__date">26 September, 2018</a>
-                        </div>
+                        <div class="single-recent-post d-flex align-items-center">
+                            <a href="" class="single-recent-post__thumb">
+                                <img src="http://placehold.it/60x60" alt="Blog Thumb">
+                            </a>
+                            <div class="single-recent-post__content">
+                                <a href="" class="single-recent-post__title">This Is Second Post For XipBlog</a>
+                                <a href="" class="single-recent-post__date">26 September, 2018</a>
+                            </div>
 
-                    </div>
+                        </div>
+                        <div class="single-recent-post d-flex align-items-center">
+                            <a href="" class="single-recent-post__thumb">
+                                <img src="http://placehold.it/60x60" alt="Blog Thumb">
+                            </a>
+                            <div class="single-recent-post__content">
+                                <a href="" class="single-recent-post__title">This Is Second Post For XipBlog</a>
+                                <a href="" class="single-recent-post__date">26 September, 2018</a>
+                            </div>
+
+                        </div>
                 </div>
             </aside>
-            <div class="col-lg-9 order-1 article-section shadow mb-5">
-                <article class="deal-section">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="product-box__image">
-                                <img src="http://placehold.it/250x250" alt="product image" class="img-fluid">
-                            </div>
-                            <button type="button" class="btn btn-outline-own my-2"><a href="#">К скидке <i class="fas fa-external-link-alt"></i></a></button>
-                        </div>
-                        <div class="col-md-8">
-                            <div class="product-box__desc">
-                                <a href="single-product.html" class="product-box__title ">Printed Summer Dress</a>
-                                <div class="mb-2">
-                                    <span class="sale-price">17.43 <i class="fas fa-ruble-sign"></i></span>
-                                    <span class="regular-price">20.50 <i class="fas fa-ruble-sign"></i></span>
-                                    <span class="product-box__sticker">-5%</span>
-                                </div>
-                                <div class="mb-2 pb-2 border-bottom d-flex">
-                                    <span class="author-deal flex-fill"><a href="#"> <i class="fas fa-user-edit"></i> kovoli</a></span>
-                                    <span class="deal-post-date flex-fill"><i class="far fa-calendar-alt"></i> 12.01.2012 (20:00)</span>
-                                    <span class="deal-comments ml-3 flex-fill"><a href="#"><i class="far fa-comments"></i> (5)</a></span>
-                                </div>
-                                <p class="product-box__short-desc">Faded short sleeves t-shirt with high neckline. Soft and stretchy material for a comfortable fit. Accessorize with a straw hat and you're ready for summer!</p>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-                <article class="deal-section ">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="product-box__image">
-                                <img src="http://placehold.it/250x250" alt="product image" class="img-fluid">
-                            </div>
-                            <button type="button" class="btn btn-outline-own my-2">К скидке <i class="fas fa-external-link-alt"></i></button>
-                        </div>
-                        <div class="col-md-8">
-                            <div class="product-box__desc">
-                                <a href="single-product.html" class="product-box__title">Printed Summer Dress</a>
-                                <div class="mb-2">
-                                    <span class="sale-price">17.43 <i class="fas fa-ruble-sign"></i></span>
-                                    <span class="regular-price">20.50 <i class="fas fa-ruble-sign"></i></span>
-                                    <span class="product-box__sticker product-box__sticker--discount">-5%</span>
-                                </div>
-                                <div class="mb-2 pb-2 border-bottom d-flex">
-                                    <span class="author-deal flex-fill"><a href="#"> <i class="fas fa-user-edit"></i> kovoli</a></span>
-                                    <span class="deal-post-date flex-fill"><i class="far fa-calendar-alt"></i> 12.01.2012 (20:00)</span>
-                                    <span class="deal-comments ml-3 flex-fill"><a href="#"><i class="far fa-comments"></i> (5)</a></span>
-                                </div>
-                                <p class="product-box__short-desc">Faded short sleeves t-shirt with high neckline. Soft and stretchy material for a comfortable fit. Accessorize with a straw hat and you're ready for summer!</p>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-            </div>
         </div>
     </div>
 {% endblock %}

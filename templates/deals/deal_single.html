@@ -4,7 +4,7 @@
 {% block content %}
 <div class="container">
         <div class="row">
-            <div class="col-lg-9 order-1  mb-5">
+            <div class="col-lg-9 px-0 order-1  mb-5">
                 <article class="deal-section-single p-3 mb-3">
                     <div class="row">
                         <div class="col-md-4">
@@ -15,27 +15,30 @@
                                 <img src="http://placehold.it/250x250" alt="product image" class="img-fluid">
                                 {% endif %}
                             </div>
-                            <button type="button" class="btn btn-outline-own my-2"><a href="{{ deal.link_to_shop }}" target="_blank">К скидке <i class="fas fa-external-link-alt"></i></a></button>
+                            <a href="{{ deal.link_to_shop }}" target="_blank"><button type="button" class="btn btn-outline-own my-2">К скидке <i class="fas fa-external-link-alt"></i></button></a>
                         </div>
                         <div class="col-md-8">
                             <div class="product-box__desc">
-                            <div class="d-flex flex-row justify-content-center p-1">
+                            <div class="d-flex flex-row justify-content-center p-1" >
+                            {% with click_counter=deal.like_counter session=request.session.click_deal deal_id=deal.id|stringformat:"i" %}
                                 <div class="d-flex flex-colum justify-content-between">
-                                    <button class="btn btn-sm btn-minus focus shadow-none"><i class="fas fa-minus"></i></button>
+                                    <button class="btn btn-sm btn-minus focus shadow-none dislike" data-id="{{ deal.id }}" {% if deal_id in session %}disabled{% endif %}><i class="fas fa-minus"></i></button>
                                 </div>
-                            <div class="d-block w-100 mx-1">
-                                <div class="progress h-100">
-                                    <div class="progress-bar" role="progressbar" style="width: 80%" aria-valuenow="8" aria-valuemin="0" aria-valuemax="10"></div>
+                                <div class="d-block w-100 mx-1">
+                                    <div class="progress h-100">
+                                        <div id="progress-bar-{{ deal.id }}" class="progress-bar" role="progressbar" style="width: {{ click_counter }}0%" aria-valuenow="{{ click_counter }}" aria-valuemin="0" aria-valuemax="10"></div>
+                                    </div>
                                 </div>
-                            </div>
-                                <div class="d-flex flex-colum justify-content-between">
-                                    <button class="btn btn-sm btn-plus focus shadow-none"><i class="fas fa-plus"></i></button>
-                                </div>
-                                <div class="d-flex flex-colum justify-content-between ml-1 rounded like-counter border">
-                                    <span class="mx-auto">2522</span>
-                                </div>
+                                    <div class="d-flex flex-colum justify-content-between">
+                                        <button class="btn btn-sm btn-plus focus shadow-none like"  data-id="{{ deal.id }}" {% if deal_id in session %}disabled{% endif %}><i class="fas fa-plus"></i></button>
+                                    </div>
+                                    <div class="d-flex flex-colum justify-content-between ml-1 rounded like-counter border">
+                                        <span class="mx-auto counter_like_deal_{{ deal.id }}">{{ click_counter }}</span>
+                                    </div>
+                                {% endwith %}
                             </div>
                                 <h1>{{ deal.name }}</h1>
+
                                 <div class="mb-2">
                                     <span class="sale-price">{{ deal.price }} <i class="fas fa-ruble-sign"></i></span>
                                     <span class="regular-price">{{ deal.oldprice }} <i class="fas fa-ruble-sign"></i></span>
@@ -65,7 +68,7 @@
                 {% for comment in comments %}
                 <article id="comment-area" class="deal-section-single deal-comments p-3 mb-1">
                     <div class="row">
-                        <div class="col-md-12" data-id="{{ comment.id }}">
+                        <div class="col-md-12">
                             <div class="comment-box__image border-bottom pb-1">
                                 <img src="http://placehold.it/40x40" alt="product image" class="img-fluid rounded-circle">
                                 <span class="author-deal ml-2"><a href="#">{{ comment.author.username }}</a></span>

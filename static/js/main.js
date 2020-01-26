@@ -48,4 +48,59 @@ $(document).ready(function() {
             }
         });
     });
+
+    $('.like').on('click', function() {
+        var $this = $(this),
+            data = $this.data();
+
+        $.ajax({
+            url: "/like_dislike/like/",
+            method: 'POST',
+            data: data,
+            success: function(data) {
+                var deal_counter = data['deal_counter'];
+                var counter_multiple = deal_counter * 10;
+                var session_id = data['session_data'];
+                var id_deal = data['id'];
+                    $(".counter_like_deal_" + data['id']).text(deal_counter);
+                    $("#progress-bar-" + data['id']).attr('aria-valuenow', deal_counter);
+                    $("#progress-bar-" + data['id']).css('width', counter_multiple + '%');
+                    if (session_id[id_deal] === 'like') {
+                        $(".btn-like-" + id_deal ).attr('disabled', true);
+                    };
+
+                    console.log(session_id[id_deal])
+            },
+            error: function(d) {
+                console.log(d);
+            }
+        });
+    });
+
+    $('.dislike').on('click', function() {
+        var $this = $(this),
+            data = $this.data();
+
+        $.ajax({
+            url: "/like_dislike/dislike/",
+            method: 'POST',
+            data: data,
+            success: function(data) {
+                var deal_counter = data['deal_counter'];
+                var counter_multiple = deal_counter * 10;
+                var session_id = data['session_data'];
+                var id_deal = data['id'].toString();
+                $(".counter_like_deal_" + data['id']).text(deal_counter);
+                $("#progress-bar-" + data['id']).attr('aria-valuenow', deal_counter);
+                $("#progress-bar-" + data['id']).css('width', counter_multiple + '%');
+                if (session_id[id_deal] === 'like') {
+                        $(".btn-like-" + id_deal ).attr('disabled', true);
+                };
+            },
+            error: function(d) {
+                console.log(d);
+            }
+        });
+    });
+
 });
