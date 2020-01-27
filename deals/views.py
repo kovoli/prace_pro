@@ -5,13 +5,16 @@ from .forms import CommentForm
 import json
 from . import helpers
 from django.db.models import F
+# decorators
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
-from .click import ClickComment, ClickDeal
 from common.decorators import ajax_required
+# sessions
+from .click import ClickComment, ClickDeal
+
 
 def home_page(request):
-    deals = Deal.objects.all()
+    deals = Deal.objects.all().prefetch_related('comments')
     categories = Category.objects.root_nodes()
     deals_list = helpers.pg_records(request, deals, 20)
 
@@ -51,7 +54,7 @@ def deal_single(request, slug):
 def deals_by_category(request, slug):
     category = get_object_or_404(Category, slug=slug)
     categories = category.get_descendants().order_by('tree_id', 'id', 'name')
-    deals = Deal.objects.filter(category__in=category.get_descendants(include_self=True))
+    deals = Deal.objects.filter(category__in=category.get_descendants(include_self=True)).prefetch_related('comments')
     print(categories)
     deals_list = helpers.pg_records(request, deals, 20)
 

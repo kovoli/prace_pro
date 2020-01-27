@@ -27,14 +27,14 @@
                                 </div>
                                 <div class="d-block w-100 mx-1">
                                     <div class="progress h-100">
-                                        <div id="progress-bar-{{ deal.id }}" class="progress-bar" role="progressbar" style="width: {{ click_counter }}0%" aria-valuenow="{{ click_counter }}" aria-valuemin="0" aria-valuemax="10"></div>
+                                        <div id="progress-bar-{{ deal_id }}" class="progress-bar" role="progressbar" style="width: {{ click_counter }}0%" aria-valuenow="{{ click_counter }}" aria-valuemin="0" aria-valuemax="10"></div>
                                     </div>
                                 </div>
                                     <div class="d-flex flex-colum justify-content-between">
                                         <button class="btn-like-{{ deal_id }} btn btn-sm btn-plus focus shadow-none like"  data-id="{{ deal.id }}" {% if deal_id in session %}disabled{% endif %}><i class="fas fa-plus"></i></button>
                                     </div>
                                     <div class="d-flex flex-colum justify-content-between ml-1 rounded like-counter border">
-                                        <span class="mx-auto counter_like_deal_{{ deal.id }}">{{ click_counter }}</span>
+                                        <span class="mx-auto counter_like_deal_{{ deal_id }}">{{ click_counter }}</span>
                                     </div>
                                 {% endwith %}
                             </div>
