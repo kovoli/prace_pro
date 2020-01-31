@@ -103,4 +103,21 @@ $(document).ready(function() {
         });
     });
 
+    // $(function () {
+    //
+    //     $("[data-target='#LoginModal']").click(function () {
+    //         $.ajax({
+    //             url: "/login/",
+    //             type: 'get',
+    //             dataType: 'json',
+    //             beforeSend: function () {
+    //                 $('#LoginModal').modal("show");
+    //             },
+    //             success: function (data) {
+    //                 $('#LoginModal .modal-content').html(data.html_form);
+    //             }
+    //         });
+    //     });
+    // });
+
 });

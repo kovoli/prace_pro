@@ -37,7 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'account.apps.AccountConfig',
     'deals.apps.DealsConfig',
+
 ]
 
 # Extern Apps
@@ -46,8 +48,8 @@ INSTALLED_APPS += [
     'ckeditor',
     'unidecode',
     'imagekit',
-
-    'debug_toolbar'
+    'debug_toolbar',
+    'widget_tweaks'
 ]
 
 MIDDLEWARE = [
@@ -144,6 +146,8 @@ MEDIA_URL = '/media/'
 INTERNAL_IPS = [
     '127.0.0.1',
 ]
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 #SESSION_COOKIE_SECURE = True
 #CSRF_USE_SESSIONS = True

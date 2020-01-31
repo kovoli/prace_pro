@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+
+{% block title %}Вход{% endblock %}
+
+{% block content %}
+<div class="container">
+<div class="row">
+<div class="col article-section">
+<article class=" my-3">
+        <p>{{ request.headers.referer }}</p>
+      <h1>Добро пожаловать!</h1>
+        <p>Воспользуйтесть формой чтобы войти в систему PriceRace.ru</p>
+          <div class="login-form">
+            <form action="{% url "login" %}" method="post">
+            <div class="form-group">
+                {{ form.non_field_errors }}
+                  {% for hidden_field in form.hidden_fields %}
+                    {{ hidden_field.errors }}
+                    {{ hidden_field }}
+                  {% endfor %}
+                    {% for field in form.visible_fields %}
+                        <div class="form-group">
+                          {{ field.label_tag }}
+                          {% if form.is_bound %}
+                            {% if field.errors %}
+                              {% render_field field class="form-control is-invalid" %}
+                              {% for error in form.errors %}
+                                <div class="invalid-feedback">
+                                  {{ error }}
+                                </div>
+                              {% endfor %}
+                            {% else %}
+                              {% render_field field class="form-control is-valid" %}
+                            {% endif %}
+                          {% else %}
+                            {% render_field field class="form-control" %}
+                          {% endif %}
+                          {% if field.help_text %}
+                            <small class="form-text text-muted">{{ field.help_text }}</small>
+                          {% endif %}
+                        </div>
+                      {% endfor %}
+              {% csrf_token %}
+              {% with referer=request.headers.referer %}
+                {% if referer == request.build_absolute_uri %}
+                    <input type="hidden" name="next" value="/" />
+                {% else %}
+                    <input type="hidden" name="next" value="{{ referer }}" />
+                {% endif %}
+              {% endwith %}
+            </div>
+            <p><a href="{% url "password_reset" %}">Забыли свой пароль?</a></p>
+              <button type="submit" class="btn btn-own">Вход</button>
+            </form>
+          </div>
+</article>
+</div>
+</div>
+</div>
+{% endblock %}

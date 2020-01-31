@@ -55,7 +55,7 @@ def deals_by_category(request, slug):
     category = get_object_or_404(Category, slug=slug)
     categories = category.get_descendants().order_by('tree_id', 'id', 'name')
     deals = Deal.objects.filter(category__in=category.get_descendants(include_self=True)).prefetch_related('comments')
-    print(categories)
+    print(request.META.get('HTTP_REFERER', '/'))
     deals_list = helpers.pg_records(request, deals, 20)
 
     content = {'category': category, 'deals_list': deals_list, 'categories': categories}
@@ -126,7 +126,6 @@ def dislike_deal(request):
             deal.refresh_from_db(fields=['like_counter'])
             ses = request.session['click_deal']
             data = {'deal_counter': deal.like_counter, 'id': deal.id, 'session_data': ses}
-            print(request.session['click_deal'])
             return JsonResponse(data)
         else:
             deal = get_object_or_404(Deal, id=deal_id)

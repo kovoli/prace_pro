@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load mptt_tags %}
+{% load widget_tweaks %}
 
 {% block content %}
 <div class="container">
@@ -102,7 +103,8 @@
                             <div class="form__group col-12">
 
                                <form action="." method="post">
-                                    {{ comment_form.body }}
+{#                                    {{ comment_form.body|add_class:"form__input form__input--textarea" }}#}
+                                    {% render_field comment_form.body class="form__input form__input--textarea" id="comment_message" %}
                                     {% csrf_token %}
                                     <button type="submit" class="btn comment-btn">Submit</button>
                                 </form>
