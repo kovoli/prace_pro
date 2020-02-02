@@ -15,4 +15,8 @@ urlpatterns = [
     path('reset/done/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
     # регистрация
     path('register/', views.register, name='register'),
+    #path('sent/', activation_sent_view, name="activation_sent"),
+    path('activate/<slug:uidb64>/<slug:token>/', views.activate, name='activate'),
+    # Профиль пользователя
+    path('edit/', views.edit, name='edit'),
 ]

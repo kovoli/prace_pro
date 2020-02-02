@@ -103,21 +103,14 @@ $(document).ready(function() {
         });
     });
 
-    // $(function () {
-    //
-    //     $("[data-target='#LoginModal']").click(function () {
-    //         $.ajax({
-    //             url: "/login/",
-    //             type: 'get',
-    //             dataType: 'json',
-    //             beforeSend: function () {
-    //                 $('#LoginModal').modal("show");
-    //             },
-    //             success: function (data) {
-    //                 $('#LoginModal .modal-content').html(data.html_form);
-    //             }
-    //         });
-    //     });
-    // });
-
+    $(".owl-carousel").owlCarousel({
+        loop:true,
+        margin:0,
+        autoWidth:true,
+        items: 4,
+        nav:true,
+        autoplayHoverPause: true,
+        animateOut: 'slideOutUp',
+        animateIn: 'slideInUp'
+    });
 });

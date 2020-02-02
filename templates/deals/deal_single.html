@@ -2,6 +2,8 @@
 {% load mptt_tags %}
 {% load widget_tweaks %}
 
+{% block title %}{{ deal.name }}{% endblock %}
+
 {% block content %}
 <div class="container">
         <div class="row">
@@ -23,7 +25,7 @@
                             <div class="d-flex flex-row justify-content-center p-1" >
                             {% with click_counter=deal.like_counter session=request.session.click_deal deal_id=deal.id|stringformat:"i" %}
                                 <div class="d-flex flex-colum justify-content-between">
-                                    <button class="btn btn-sm btn-minus focus shadow-none dislike" data-id="{{ deal.id }}" {% if deal_id in session %}disabled{% endif %}><i class="fas fa-minus"></i></button>
+                                    <button class="btn-like-{{ deal_id }} btn btn-sm btn-minus focus shadow-none dislike" data-id="{{ deal.id }}" {% if request.user in deal.user_like.all or deal_id in session %}disabled{% endif %}><i class="fas fa-minus"></i></button>
                                 </div>
                                 <div class="d-block w-100 mx-1">
                                     <div class="progress h-100">
@@ -31,7 +33,7 @@
                                     </div>
                                 </div>
                                     <div class="d-flex flex-colum justify-content-between">
-                                        <button class="btn btn-sm btn-plus focus shadow-none like"  data-id="{{ deal.id }}" {% if deal_id in session %}disabled{% endif %}><i class="fas fa-plus"></i></button>
+                                        <button class="btn-like-{{ deal_id }} btn btn-sm btn-plus focus shadow-none like"  data-id="{{ deal.id }}" {% if request.user in deal.user_like.all or deal_id in session %}disabled{% endif %}><i class="fas fa-plus"></i></button>
                                     </div>
                                     <div class="d-flex flex-colum justify-content-between ml-1 rounded like-counter border">
                                         <span class="mx-auto counter_like_deal_{{ deal.id }}">{{ click_counter }}</span>
@@ -60,6 +62,13 @@
                         </div>
                     </div>
                     <div class="deal-desc my-3">
+                        {% for i in '123456789' %}
+                            {% if forloop.counter0 == 4 %}
+                                обрыв
+                            {% else %}
+                                {{ i }}
+                            {% endif %}
+                        {% endfor %}
                         {{ deal.description|safe }}
                     </div>
                     <div class="deal-footer border-top d-flex align-items-end">
@@ -132,26 +141,23 @@
                 <div class="section-title section-title--3 mb-2">
                     <h3>Похожие</h3>
                 </div>
-                    <div class="single-recent-post d-flex align-items-center">
-                        <a href="" class="single-recent-post__thumb">
-                            <img src="http://placehold.it/60x60" alt="Blog Thumb">
-                        </a>
-                        <div class="single-recent-post__content">
-                            <a href="" class="single-recent-post__title">This Is Second Post For XipBlog</a>
-                            <a href="" class="single-recent-post__date">26 September, 2018</a>
-                        </div>
+
+                    <div class="owl-carousel owl-theme">
+
+                                {% for semi in semilar_products %}
+                                <div class="single-recent-post d-flex align-items-center">
+                                    <a href="" class="single-recent-post__thumb">
+                                        <img src="http://placehold.it/60x60" alt="Blog Thumb">
+                                    </a>
+                                    <div class="single-recent-post__content">
+                                        <a href="" class="single-recent-post__title">{{ semi.name }}</a>
+                                        <a href="" class="single-recent-post__date">{{ semi.price }}</a>
+                                    </div>
+                                </div>
+                                {% endfor %}
 
                     </div>
-                    <div class="single-recent-post d-flex align-items-center">
-                        <a href="" class="single-recent-post__thumb">
-                            <img src="http://placehold.it/60x60" alt="Blog Thumb">
-                        </a>
-                        <div class="single-recent-post__content">
-                            <a href="" class="single-recent-post__title">This Is Second Post For XipBlog</a>
-                            <a href="" class="single-recent-post__date">26 September, 2018</a>
-                        </div>
 
-                    </div>
                 </div>
             </aside>
         </div>

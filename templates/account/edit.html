@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block title %}Edit your account{% endblock %}
+{% load widget_tweaks %}
+
+
+{% block content %}
+<div class="container">
+<div class="row">
+<div class="col article-section">
+<article class=" my-3">
+  <h1>Изменить данные своего аккаунта</h1>
+  <p>Вы можете редактировать свой аккаунт, используя следующую форму:</p>
+      {% if messages %}
+      <ul class="list-unstyled">
+        {% for message in messages %}
+            <li class="alert alert-{{ message.tags }}">
+            {{ message|safe }}
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+          </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  <form action="." method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+    <div class="form-group">
+        {{ user_form.non_field_errors }}
+          {% for hidden_field in user_form.hidden_fields %}
+            {{ hidden_field.errors }}
+            {{ hidden_field }}
+          {% endfor %}
+        {% for field in user_form.visible_fields %}
+            <div class="form-group">
+              {{ field.label_tag }}
+              {% if user_form.is_bound %}
+                {% if field.errors %}
+                  {% render_field field class="form-control w-50 is-invalid" %}
+                  {% for error in field.errors %}
+                    <div class="invalid-feedback">
+                      {{ error }}
+                    </div>
+                  {% endfor %}
+                {% else %}
+                  {% render_field field class="form-control w-50 is-valid" %}
+                {% endif %}
+              {% else %}
+                {% render_field field class="form-control w-50" %}
+              {% endif %}
+              {% if field.help_text %}
+                <small class="form-text text-muted">{{ field.help_text }}</small>
+              {% endif %}
+            </div>
+          {% endfor %}
+    </div>
+    <div class="form-group">
+        {{ profile_form.non_field_errors }}
+          {% for hidden_field in profile_form.hidden_fields %}
+            {{ hidden_field.errors }}
+            {{ hidden_field }}
+          {% endfor %}
+        {% for field in profile_form.visible_fields %}
+            <div class="form-group">
+              {{ field.label_tag }}
+              {% if profile_form.is_bound %}
+                {% if field.errors %}
+                  {% render_field field class="form-control w-50 is-invalid" %}
+                  {% for error in field.errors %}
+                    <div class="invalid-feedback">
+                      {{ error }}
+                    </div>
+                  {% endfor %}
+                {% else %}
+                    {% render_field field class="form-control w-50 is-valid" %}
+                    {% if field.photo %}
+                        <img src="{{ field.photo.url }}">
+                    {% endif %}    
+                {% endif %}
+              {% else %}
+                {% render_field field class="form-control w-50" %}
+              {% endif %}
+              {% if field.help_text %}
+                <small class="form-text text-muted">{{ field.help_text }}</small>
+              {% endif %}
+            </div>
+          {% endfor %}
+    </div>
+    <button type="submit" class="btn btn-own">Изменить</button>
+  </form>
+  <hr>
+    <a href="{% url 'password_change' %}"><button type="submit" class="btn btn-own">Изменить пароль</button></a>
+</article>
+</div>
+</div>
+</div>
+{% endblock %}

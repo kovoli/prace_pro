@@ -3,6 +3,16 @@
 {% block title %}Welcome{% endblock %}
 
 {% block content %}
-  <h1>Welcome {{ new_user.first_name }}!</h1>
-  <p>Your account has been successfully created. Now you can <a href="{% url "login" %}">log in</a>.</p>
+<div class="container">
+<div class="row">
+<div class="col article-section">
+<article class=" my-3">
+  <h1>Добро пожаловать {{ new_user.first_name }}!</h1>
+    <p>Для подтверждения вашего аккаунта сначала просмотрите папку входящих сообщений на почте, которую вы использовали при регистрации на сайте <strong>PriceRace.ru</strong>, чтобы проверить получили ли вы электронное письмо с подтверждением.</p>
+    <p>Электронное письмо для подтверждения аккаунта <strong>содержит ссылку для подтверждения адреса электронной почты</strong>. Пройдите по ссылке, чтобы подтвердить регистрацию вашего аккаунта.</p>
+    <p>Если вы не получили данное письмо, проверьте папки «Спам» и «Удаленные», так как письмо могло автоматически туда перейти.</p>
+</article>
+</div>
+</div>
+</div>
 {% endblock %}

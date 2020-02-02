@@ -229,3 +229,13 @@ a .btn-outline-own  {
 .page-link {
     color: #145595;
 }
+.alert-error {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+.btn-outline-light:hover {
+    color: #ffffff;
+    background-color: #f8f9fa21;
+    border-color: #f8f9fa;
+}

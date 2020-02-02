@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Welcome{% endblock %}
+
+{% block content %}
+<div class="container">
+<div class="row">
+<div class="col article-section">
+<article class=" my-3">
+  <h1>Добро пожаловать!</h1>
+    <p>Что-то пошло не так. Возможно полсле вашей регистрации на сайте
+        <strong>PriceRace.ru</strong> и выделеным времени на активацию вашего аккаунта прошло больше 7 дней.
+    </p>
+    <p>Пройдите регистрацию занового</p>
+    <a href="{% url 'register' %}"><button type="submit" class="btn btn-own">Зарегестрироваться</button></a>
+</article>
+</div>
+</div>
+</div>
+{% endblock %}

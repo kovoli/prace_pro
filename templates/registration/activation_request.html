@@ -1,0 +1,5 @@
+Привет {{ user.username }},
+
+Пожалуйста, нажмите на следующую ссылку, чтобы подтвердить регистрацию на сайте pricerace.ru:
+
+{{ protocol }}://{{ domain }}{% url 'activate' uidb64=uid token=token %}

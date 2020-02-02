@@ -14,7 +14,7 @@ from .click import ClickComment, ClickDeal
 
 
 def home_page(request):
-    deals = Deal.objects.all().prefetch_related('comments')
+    deals = Deal.objects.all().prefetch_related('comments', 'user_like')
     categories = Category.objects.root_nodes()
     deals_list = helpers.pg_records(request, deals, 20)
 
@@ -29,6 +29,8 @@ def deal_single(request, slug):
     categories = Category.objects.root_nodes()
     # Комментраии
     comments = deal.comments.filter(active=True)
+    semilar_products = Deal.objects.filter(category=deal.category) \
+        .exclude(id=deal.id)
     # Форма для комментариев
     new_comment = None
 
@@ -46,7 +48,8 @@ def deal_single(request, slug):
                'categories': categories,
                'comments': comments,
                'new_comment': new_comment,
-               'comment_form': comment_form}
+               'comment_form': comment_form,
+               'semilar_products': semilar_products}
 
     return render(request, 'deals/deal_single.html', context)
 
@@ -54,7 +57,7 @@ def deal_single(request, slug):
 def deals_by_category(request, slug):
     category = get_object_or_404(Category, slug=slug)
     categories = category.get_descendants().order_by('tree_id', 'id', 'name')
-    deals = Deal.objects.filter(category__in=category.get_descendants(include_self=True)).prefetch_related('comments')
+    deals = Deal.objects.filter(category__in=category.get_descendants(include_self=True)).prefetch_related('comments', 'user_like')
     print(request.META.get('HTTP_REFERER', '/'))
     deals_list = helpers.pg_records(request, deals, 20)
 

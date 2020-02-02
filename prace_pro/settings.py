@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'account.apps.AccountConfig',
     'deals.apps.DealsConfig',
-
+    'django.contrib.sites'
 ]
 
 # Extern Apps
@@ -49,7 +49,8 @@ INSTALLED_APPS += [
     'unidecode',
     'imagekit',
     'debug_toolbar',
-    'widget_tweaks'
+    'widget_tweaks',
+    'six'
 ]
 
 MIDDLEWARE = [
@@ -148,6 +149,8 @@ INTERNAL_IPS = [
 ]
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+LOGOUT_REDIRECT_URL = 'deals:home'
 
 #SESSION_COOKIE_SECURE = True
 #CSRF_USE_SESSIONS = True

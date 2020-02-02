@@ -5,6 +5,7 @@ from .models import Category, Deal, Brand, Shop, Comment
 @admin.register(Deal)
 class DealAdmin(admin.ModelAdmin):
     list_display = ['name']
+    list_filter = ['category']
     readonly_fields = ['slug']
 
 

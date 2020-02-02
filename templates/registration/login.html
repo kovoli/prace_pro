@@ -8,7 +8,6 @@
 <div class="row">
 <div class="col article-section">
 <article class=" my-3">
-        <p>{{ request.headers.referer }}</p>
       <h1>Добро пожаловать!</h1>
         <p>Воспользуйтесть формой чтобы войти в систему PriceRace.ru</p>
           <div class="login-form">
@@ -16,7 +15,7 @@
             <div class="form-group">
                 {{ form.non_field_errors }}
                   {% for hidden_field in form.hidden_fields %}
-                    {{ hidden_field.errors }}
+
                     {{ hidden_field }}
                   {% endfor %}
                     {% for field in form.visible_fields %}
@@ -24,17 +23,17 @@
                           {{ field.label_tag }}
                           {% if form.is_bound %}
                             {% if field.errors %}
-                              {% render_field field class="form-control is-invalid" %}
+                              {% render_field field class="form-control w-50 is-invalid" %}
                               {% for error in form.errors %}
                                 <div class="invalid-feedback">
                                   {{ error }}
                                 </div>
                               {% endfor %}
                             {% else %}
-                              {% render_field field class="form-control is-valid" %}
+                              {% render_field field class="form-control w-50 is-valid" %}
                             {% endif %}
                           {% else %}
-                            {% render_field field class="form-control" %}
+                            {% render_field field class="form-control w-50" %}
                           {% endif %}
                           {% if field.help_text %}
                             <small class="form-text text-muted">{{ field.help_text }}</small>
