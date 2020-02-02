@@ -62,13 +62,6 @@
                         </div>
                     </div>
                     <div class="deal-desc my-3">
-                        {% for i in '123456789' %}
-                            {% if forloop.counter0 == 4 %}
-                                обрыв
-                            {% else %}
-                                {{ i }}
-                            {% endif %}
-                        {% endfor %}
                         {{ deal.description|safe }}
                     </div>
                     <div class="deal-footer border-top d-flex align-items-end">
@@ -127,7 +120,7 @@
             <aside class="col-lg-3 order-2">
                 <!-- Category -->
                 <div class="category-sidebar">
-                <div class="section-title section-title--3 ">
+                <div class="section-title">
                     <h3>Категории</h3>
                 </div>
                 <ul class="list-group list-group-flush">
@@ -138,28 +131,33 @@
                 </div>
                 <!-- Hot Deals -->
                 <div class="deals-slide_sidebar mt-3">
-                <div class="section-title section-title--3 mb-2">
-                    <h3>Похожие</h3>
+                <div class="section-title  mb-2">
+                    <h3>Похожие скидки</h3>
                 </div>
-
-                    <div class="owl-carousel owl-theme">
-
-                                {% for semi in semilar_products %}
-                                <div class="single-recent-post d-flex align-items-center">
-                                    <a href="" class="single-recent-post__thumb">
-                                        <img src="http://placehold.it/60x60" alt="Blog Thumb">
-                                    </a>
-                                    <div class="single-recent-post__content">
-                                        <a href="" class="single-recent-post__title">{{ semi.name }}</a>
-                                        <a href="" class="single-recent-post__date">{{ semi.price }}</a>
-                                    </div>
+                    <div class="sidebar-slider">
+                            {% for semi in semilar_products %}
+                            <div class="single-recent-post d-flex align-items-center">
+                                <a href="{{ semi.get_absolute_url }}" class="single-recent-post__thumb">
+                                    <img src="http://placehold.it/60x60" alt="Blog Thumb">
+                                </a>
+                                <div class="single-recent-post__content">
+                                    <a href="{{ semi.get_absolute_url }}" class="single-recent-post__title">{{ semi.name }}</a>
+                                    <a href="" class="single-recent-post__date">{{ semi.price }}</a>
                                 </div>
-                                {% endfor %}
+                            </div>
+                            {% endfor %}
 
                     </div>
-
+                    <div class="d-flex justify-content-center">
+                        <span class="prev_arrow mr-3"><i class="far fa-arrow-alt-circle-down"></i></span>
+                        <span class="next_arrow ml-3"><i class="far fa-arrow-alt-circle-up"></i></span>
+                    </div>
+                    <div class="slick-dots control_slide"></div>
                 </div>
             </aside>
         </div>
 </div>
+<script>
+
+</script>
 {% endblock %}

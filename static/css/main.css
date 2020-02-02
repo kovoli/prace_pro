@@ -70,13 +70,14 @@ a:hover {
     text-transform: capitalize;
     line-height: 3rem;
     padding: 0 .5rem 0 0;
-    font-size: 2rem;
+    font-size: 1.5rem;
     color: #2c2e3d;
     background: #fff;
     z-index: 1;
     margin-bottom: 0;
 }
-.section-title:after, .produtct-combo-tab__head:after {
+
+.section-title:after {
     position: absolute;
     content: "";
     top: 55%;
@@ -238,4 +239,7 @@ a .btn-outline-own  {
     color: #ffffff;
     background-color: #f8f9fa21;
     border-color: #f8f9fa;
+}
+.slick-arrow {
+    font-size: 1.3rem;
 }

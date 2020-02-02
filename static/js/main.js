@@ -103,14 +103,22 @@ $(document).ready(function() {
         });
     });
 
-    $(".owl-carousel").owlCarousel({
-        loop:true,
-        margin:0,
-        autoWidth:true,
-        items: 4,
-        nav:true,
-        autoplayHoverPause: true,
-        animateOut: 'slideOutUp',
-        animateIn: 'slideInUp'
-    });
+    $('.sidebar-slider').slick({
+        vertical: true,
+        infinite: true,
+        slidesToShow: 5,
+        slidesToScroll: 1,
+        verticalSwiping: true,
+        prevArrow: $('.prev_arrow'),
+        nextArrow: $('.next_arrow')
+  }).on('wheel', (function(e) {
+      e.preventDefault();
+
+      if (e.originalEvent.deltaY < 0) {
+        $(this).slick('slickNext');
+      } else {
+        $(this).slick('slickPrev');
+      }
+    }));
+
 });
