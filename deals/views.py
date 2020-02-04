@@ -11,7 +11,7 @@ from django.views.decorators.http import require_POST
 from common.decorators import ajax_required
 # sessions
 from .click import ClickComment, ClickDeal
-
+from django.db.models import Count
 
 def home_page(request):
     deals = Deal.objects.all().prefetch_related('comments', 'user_like')
@@ -30,7 +30,7 @@ def deal_single(request, slug):
     # Комментраии
     comments = deal.comments.filter(active=True)
     semilar_products = Deal.objects.filter(category=deal.category) \
-        .exclude(id=deal.id)
+        .annotate(like_count=Count('user_like')).order_by('-like_count').exclude(id=deal.id)
     # Форма для комментариев
     new_comment = None
 

@@ -31,6 +31,7 @@ $(document).ready(function() {
         }
     });
 
+    // LIKE COMMENT
     $('.like_comment').on('click', function(e) {
         e.preventDefault();
         var $this = $(this),
@@ -49,6 +50,7 @@ $(document).ready(function() {
         });
     });
 
+    // LIKE DEAL
     $('.like').on('click', function() {
         var $this = $(this),
             data = $this.data();
@@ -77,6 +79,7 @@ $(document).ready(function() {
         });
     });
 
+    // DISLIKE DEAL
     $('.dislike').on('click', function() {
         var $this = $(this),
             data = $this.data();
@@ -103,11 +106,12 @@ $(document).ready(function() {
         });
     });
 
+    // SLIDER SIDEBAR FOR DEALS
     $('.sidebar-slider').slick({
         vertical: true,
         infinite: true,
         slidesToShow: 5,
-        slidesToScroll: 1,
+        slidesToScroll: 3,
         verticalSwiping: true,
         prevArrow: $('.prev_arrow'),
         nextArrow: $('.next_arrow')

@@ -104,13 +104,16 @@ a:hover {
 .single-recent-post__title {
     font-size: .9rem;
     color: #2c2e3d;
-    margin-bottom: 0.3rem;
-    line-height: 1.4;
+    line-height: 1.2;
     display: block;
 }
 .single-recent-post__date {
     font-size: 0.7rem;
     color: #838383;
+}
+.sidebar-price {
+    font-size: 0.7rem;
+    color: #fa641e;
 }
 /* Deals List */
 .article-section {
@@ -161,8 +164,8 @@ a .btn-outline-own  {
     background: rgb(21,85,150);
     background: linear-gradient(90deg, rgba(21,85,150,1) 0%, rgba(33,107,150,1) 28%, rgba(255,0,0,1) 100%);
 }
-.like-counter {
-    width: 5rem;
+.like-heart {
+    color: #ff0000;
 }
 .product-box__title {
     font-size: 1.6rem;

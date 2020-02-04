@@ -24,7 +24,7 @@
                             <div class="product-box__desc">
                             <div class="d-flex flex-row justify-content-center p-1" >
                             {% with click_counter=deal.like_counter session=request.session.click_deal deal_id=deal.id|stringformat:"i" %}
-                                <div class="d-flex flex-colum justify-content-between">
+                                <div class="d-flex  justify-content-between">
                                     <button class="btn-like-{{ deal_id }} btn btn-sm btn-minus focus shadow-none dislike" data-id="{{ deal.id }}" {% if request.user in deal.user_like.all or deal_id in session %}disabled{% endif %}><i class="fas fa-minus"></i></button>
                                 </div>
                                 <div class="d-block w-100 mx-1">
@@ -32,11 +32,12 @@
                                         <div id="progress-bar-{{ deal.id }}" class="progress-bar" role="progressbar" style="width: {{ click_counter }}0%" aria-valuenow="{{ click_counter }}" aria-valuemin="0" aria-valuemax="10"></div>
                                     </div>
                                 </div>
-                                    <div class="d-flex flex-colum justify-content-between">
+                                    <div class="d-flex justify-content-between">
                                         <button class="btn-like-{{ deal_id }} btn btn-sm btn-plus focus shadow-none like"  data-id="{{ deal.id }}" {% if request.user in deal.user_like.all or deal_id in session %}disabled{% endif %}><i class="fas fa-plus"></i></button>
                                     </div>
-                                    <div class="d-flex flex-colum justify-content-between ml-1 rounded like-counter border">
-                                        <span class="mx-auto counter_like_deal_{{ deal.id }}">{{ click_counter }}</span>
+                                    <div class="d-flex justify-content-between ml-1 rounded like-counter border">
+                                        <span class="mx-1 counter_like_deal_{{ deal.id }}">{{ click_counter }} </span>
+                                        <span class="mx-1 like-heart"><i class="fas fa-heartbeat"></i></span>
                                     </div>
                                 {% endwith %}
                             </div>
@@ -141,8 +142,8 @@
                                     <img src="http://placehold.it/60x60" alt="Blog Thumb">
                                 </a>
                                 <div class="single-recent-post__content">
-                                    <a href="{{ semi.get_absolute_url }}" class="single-recent-post__title">{{ semi.name }}</a>
-                                    <a href="" class="single-recent-post__date">{{ semi.price }}</a>
+                                    <a href="{{ semi.get_absolute_url }}" class="single-recent-post__title">{{ semi.like_counter }} <span class="like-heart"><i class="fas fa-heartbeat"></i></span> {{ semi.name|truncatechars:25 }}</a>
+                                    <span class="sidebar-price">{{ semi.price }} <i class="fas fa-ruble-sign"></i></span>
                                 </div>
                             </div>
                             {% endfor %}
