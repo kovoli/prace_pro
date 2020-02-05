@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, HttpResponseRedirect, reverse
 from .models import Deal, Category, Brand, Shop, Comment
 from django.http import HttpResponse, JsonResponse
 from .forms import CommentForm
@@ -8,6 +8,7 @@ from django.db.models import F
 # decorators
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
+from django.views.decorators.cache import cache_control
 from common.decorators import ajax_required
 # sessions
 from .click import ClickComment, ClickDeal
@@ -40,7 +41,7 @@ def deal_single(request, slug):
             new_comment = comment_form.save(commit=False)
             new_comment.deal = deal
             new_comment.save()
-            return redirect('deals:deal_detail', slug=deal.slug)
+            return HttpResponseRedirect(reverse('deals:deal_detail', args=[deal.slug]))
     else:
         comment_form = CommentForm()
 
@@ -87,6 +88,7 @@ def like_comment(request):
 # @login_required
 @require_POST
 @ajax_required
+#@login_required
 def like_deal(request):
     deal_id = request.POST.get('id', None)
     like_deal = ClickDeal(request)
@@ -116,6 +118,7 @@ def like_deal(request):
 
 @require_POST
 @ajax_required
+#@login_required
 def dislike_deal(request):
     deal_id = request.POST.get('id', None)
     like_deal = ClickDeal(request)

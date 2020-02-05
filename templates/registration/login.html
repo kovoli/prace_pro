@@ -5,9 +5,9 @@
 
 {% block content %}
 <div class="container">
-<div class="row">
-<div class="col article-section">
-<article class=" my-3">
+<div class="row article-section">
+<div class="col-md-7 border-right">
+<article class="my-3">
       <h1>Добро пожаловать!</h1>
         <p>Воспользуйтесть формой чтобы войти в систему PriceRace.ru</p>
           <div class="login-form">
@@ -15,7 +15,6 @@
             <div class="form-group">
                 {{ form.non_field_errors }}
                   {% for hidden_field in form.hidden_fields %}
-
                     {{ hidden_field }}
                   {% endfor %}
                     {% for field in form.visible_fields %}
@@ -23,17 +22,17 @@
                           {{ field.label_tag }}
                           {% if form.is_bound %}
                             {% if field.errors %}
-                              {% render_field field class="form-control w-50 is-invalid" %}
+                              {% render_field field class="form-control is-invalid" %}
                               {% for error in form.errors %}
                                 <div class="invalid-feedback">
                                   {{ error }}
                                 </div>
                               {% endfor %}
                             {% else %}
-                              {% render_field field class="form-control w-50 is-valid" %}
+                              {% render_field field class="form-control is-valid" %}
                             {% endif %}
                           {% else %}
-                            {% render_field field class="form-control w-50" %}
+                            {% render_field field class="form-control" %}
                           {% endif %}
                           {% if field.help_text %}
                             <small class="form-text text-muted">{{ field.help_text }}</small>
@@ -54,6 +53,18 @@
             </form>
           </div>
 </article>
+</div>
+<div class="col-md-5">
+    <div class="my-3 text-center">
+        <h3>Ещё нет аккаунта на PriceRace.ru?</h3>
+        <p class="mt-4">На <strong class="site-name">PriceRace.ru</strong> самые лучшие и независимые скидки.
+           Выгодные предложения на любимые бренды.
+        </p>
+        <p class="my-4">
+            Стань частью сообщества, делись скидками и своим мнением в комментариях и экономь на покупках.
+        </p>
+        <a href="{% url 'register' %}"><button type="submit" class="btn btn-own">Зарегестрироваться</button></a>
+    </div>
 </div>
 </div>
 </div>

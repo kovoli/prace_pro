@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+
+{% block title %}{{ deal.name }}{% endblock %}
+
+{% block content %}
+<div class="container">
+        <div class="row">
+            <div class="col-lg-9 px-0 order-2  mb-5">
+                <article class="deal-section-single p-3 mb-3">
+                <nav>
+                  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                    <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-deals" role="tab" aria-controls="nav-home" aria-selected="true">Скидки</a>
+                    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Комментарии</a>
+                    <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Contact</a>
+                  </div>
+                </nav>
+                <div class="tab-content" id="nav-tabContent">
+                  <div class="tab-pane fade show active" id="nav-deals" role="tabpanel" aria-labelledby="nav-home-tab">
+                  <ul class="list-unstyled">
+                      <li class="media">
+                        <img class="mr-3" src="..." alt="Generic placeholder image">
+                        <div class="media-body">
+                          <h5 class="mt-0 mb-1">List-based media object</h5>
+                          Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+                        </div>
+                      </li>
+                  </ul>
+                      {% for i in deals %}
+                        {{ i.name }}
+                    {% endfor %}
+                  </div>
+                  <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">...</div>
+                  <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
+                </div>
+
+                </article>
+
+            </div>
+            <aside class="col-lg-3 order-1">
+                <div class="category-sidebar">
+                <div class="section-title">
+                    <h3>Профиль</h3>
+                </div>
+                    <div class="row justify-content-center">
+                        <img class="rounded img-fluid my-3" src="{{ user.profile.photo.url }}" alt="Generic placeholder image">
+                    </div>
+                    <div class="text-center">
+                        <span class="d-block">{{ user.username }}</span>
+                        <span class="d-inline"><i class="far fa-calendar-alt"></i> {{ user.date_joined|date:"d M Y " }}</span>
+                    </div>
+                </div>
+            </aside>
+        </div>
+</div>
+{% endblock %}

@@ -19,4 +19,5 @@ urlpatterns = [
     path('activate/<slug:uidb64>/<slug:token>/', views.activate, name='activate'),
     # Профиль пользователя
     path('edit/', views.edit, name='edit'),
+    path('profile/<username>/', views.profile, name='profile'),
 ]

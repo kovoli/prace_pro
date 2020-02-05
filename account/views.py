@@ -1,7 +1,8 @@
 from django.contrib.auth import login
 from django.contrib.auth.models import User
+from deals.models import Deal
 from django.contrib.sites.shortcuts import get_current_site
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
@@ -84,3 +85,13 @@ def edit(request):
     return render(request, 'account/edit.html', {'user_form': user_form,
                                                  'profile_form': profile_form,
                                                  'profile': profile})
+
+
+@login_required
+def profile(request, username):
+    username = request.user
+    user = get_object_or_404(User, username=username)
+    deals = Deal.objects.filter(author=user)
+
+    context = {'user': user, 'deals': deals}
+    return render(request, 'account/profil.html', context)
