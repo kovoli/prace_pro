@@ -18,6 +18,7 @@ class Shop(models.Model):
     slug = models.SlugField(max_length=255, unique=True)
     description = RichTextField(blank=True, null=True)
     link_to_shop = models.URLField(blank=True, null=True)  # TODO Убрать при Production
+    favorites = models.BooleanField(default=False)
     shop_image = ProcessedImageField(upload_to='shop_images/%Y/%m',
                                      processors=[ResizeToFit(None, 250)],
                                      format='JPEG',

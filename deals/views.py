@@ -7,9 +7,8 @@ import json
 from . import helpers
 from django.db.models import F
 # decorators
-from django.contrib.auth.decorators import login_required
+# from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
-from django.views.decorators.cache import cache_control
 from common.decorators import ajax_required
 # sessions
 from .click import ClickComment, ClickDeal
@@ -17,23 +16,28 @@ from django.db.models import Count
 
 
 def home_page(request):
-    deals = Deal.objects.all().prefetch_related('comments', 'user_like', 'author')
-    categories = Category.objects.root_nodes()
+    deals = Deal.objects.all().prefetch_related('comments', 'user_like', 'author__profile')
     deals_list = helpers.pg_records(request, deals, 20)
 
-    context = {'deals_list': deals_list, 'categories': categories}
+    #
+    best_all_time = Deal.objects.all().order_by('-like_counter')[:10]
+
+    context = {'deals_list': deals_list,
+               'best_all_time': best_all_time}
     return render(request, 'home_page.html', context)
 
 
 def deal_single(request, slug):
     # Скидка
-    deal = get_object_or_404(Deal, slug=slug)
-    # Категории
-    categories = Category.objects.root_nodes()
+    deal = get_object_or_404(Deal.objects.select_related('author__profile'), slug=slug)
+
     # Комментраии
     comments = deal.comments.filter(active=True)
+    # Похожие товары
     semilar_products = Deal.objects.filter(category=deal.category) \
-        .annotate(like_count=Count('user_like')).order_by('-like_count').exclude(id=deal.id)
+        .annotate(like_count=Count('user_like')).order_by('-like_count').exclude(id=deal.id)[:10]
+    # Лучшие магазины
+    favorite_shops = Shop.objects.filter(favorites=True)[:10]
     # Форма для комментариев
     new_comment = None
 
@@ -54,11 +58,11 @@ def deal_single(request, slug):
         comment_form = CommentForm()
 
     context = {'deal': deal,
-               'categories': categories,
                'comments': comments,
                'new_comment': new_comment,
                'comment_form': comment_form,
-               'semilar_products': semilar_products}
+               'semilar_products': semilar_products,
+               'favorite_shops': favorite_shops}
 
     return render(request, 'deals/deal_single.html', context)
 
@@ -66,7 +70,7 @@ def deal_single(request, slug):
 def deals_by_category(request, slug):
     category = get_object_or_404(Category, slug=slug)
     categories = category.get_descendants().order_by('tree_id', 'id', 'name')
-    deals = Deal.objects.filter(category__in=category.get_descendants(include_self=True)).prefetch_related('comments', 'user_like', 'author')
+    deals = Deal.objects.filter(category__in=category.get_descendants(include_self=True)).prefetch_related('comments', 'user_like', 'author__profile')
 
     deals_list = helpers.pg_records(request, deals, 20)
 

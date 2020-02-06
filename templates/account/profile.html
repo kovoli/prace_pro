@@ -77,12 +77,11 @@
                     <h3>Статистика</h3>
                 </div>
                     <div>
-                        <div class="my-2">Записей</div>
-                        <div><i class="fas fa-tag"></i>  {{ deals.count}} <small>скидок</small></div>
-                        <div><i class="fas fa-comments"></i>  {{ comments.count}} <small>комментариев</small></div>
-                        <div class="my-2">Активность</div>
-                        <div><i class="far fa-thumbs-up"></i> {{ user.user_like.count }} <small>Лайки/Дизлайки</small></div>
-
+                        <div class="my-2 border-bottom">Записей</div>
+                        <div><i class="fas fa-tag mr-2"></i>  {{ deals.count}} <small>скидок</small></div>
+                        <div><i class="fas fa-comments mr-2"></i>  {{ comments.count}} <small>комментариев</small></div>
+                        <div class="my-2 border-bottom">Активность</div>
+                        <div><i class="far fa-thumbs-up mr-2"></i> {{ user.user_like.count }} <small>Лайки/Дизлайки</small></div>
                     </div>
                 </div>
             </aside>

@@ -78,28 +78,26 @@
                     </div>
                 <!-- Hot Deals -->
                 <div class="deals-slide_sidebar mt-3">
-                    <div class="section-title section-title--3 mb-2">
-                        <h3>Похожие</h3>
+                <div class="section-title  mb-2">
+                    <h3>Лучшие скидки</h3>
+                </div>
+                    <div class="sidebar-slider_home">
+                            {% for semi in best_all_time %}
+                            <div class="single-recent-post d-flex align-items-center">
+                                <a href="{{ semi.get_absolute_url }}" class="single-recent-post__thumb">
+                                    <img src="http://placehold.it/60x60" alt="Blog Thumb">
+                                </a>
+                                <div class="single-recent-post__content">
+                                    <a href="{{ semi.get_absolute_url }}" class="single-recent-post__title text-decoration-none">{{ semi.like_counter }} <span class="like-heart border-right pr-1"><i class="fas fa-heartbeat"></i></span> {{ semi.name|truncatechars:25 }}</a>
+                                    <span class="sidebar-price">{{ semi.price }} <i class="fas fa-ruble-sign"></i></span>
+                                </div>
+                            </div>
+                            {% endfor %}
                     </div>
-                        <div class="single-recent-post d-flex align-items-center">
-                            <a href="" class="single-recent-post__thumb">
-                                <img src="http://placehold.it/60x60" alt="Blog Thumb">
-                            </a>
-                            <div class="single-recent-post__content">
-                                <a href="" class="single-recent-post__title">This Is Second Post For XipBlog</a>
-                                <a href="" class="single-recent-post__date">26 September, 2018</a>
-                            </div>
-
-                        </div>
-                        <div class="single-recent-post d-flex align-items-center">
-                            <a href="" class="single-recent-post__thumb">
-                                <img src="http://placehold.it/60x60" alt="Blog Thumb">
-                            </a>
-                            <div class="single-recent-post__content">
-                                <a href="" class="single-recent-post__title">This Is Second Post For XipBlog</a>
-                                <a href="" class="single-recent-post__date">26 September, 2018</a>
-                            </div>
-                        </div>
+                    <div class="d-flex justify-content-center">
+                        <span class="prev_arrow_home mr-3"><i class="far fa-arrow-alt-circle-down"></i></span>
+                        <span class="next_arrow_home ml-3"><i class="far fa-arrow-alt-circle-up"></i></span>
+                    </div>
                 </div>
             </aside>
         </div>
