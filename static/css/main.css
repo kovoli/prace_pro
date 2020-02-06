@@ -67,7 +67,6 @@ a:hover {
 .section-title h3 {
     position: relative;
     display: inline-block;
-    text-transform: capitalize;
     line-height: 3rem;
     padding: 0 .5rem 0 0;
     font-size: 1.5rem;
@@ -243,6 +242,11 @@ a .btn-outline-own  {
     background-color: #f8f9fa21;
     border-color: #f8f9fa;
 }
+/* Slider Slick */
 .slick-arrow {
     font-size: 1.3rem;
+}
+
+.dropdown-menu-right {
+    right: -2rem;
 }

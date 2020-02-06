@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, HttpResponseRedirect, reverse
 from .models import Deal, Category, Brand, Shop, Comment
+from django.contrib.auth.models import User
 from django.http import HttpResponse, JsonResponse
 from .forms import CommentForm
 import json
@@ -14,8 +15,9 @@ from common.decorators import ajax_required
 from .click import ClickComment, ClickDeal
 from django.db.models import Count
 
+
 def home_page(request):
-    deals = Deal.objects.all().prefetch_related('comments', 'user_like')
+    deals = Deal.objects.all().prefetch_related('comments', 'user_like', 'author')
     categories = Category.objects.root_nodes()
     deals_list = helpers.pg_records(request, deals, 20)
 
@@ -36,11 +38,17 @@ def deal_single(request, slug):
     new_comment = None
 
     if request.method == 'POST':
-        comment_form = CommentForm(data=request.POST or None)
+        comment_form = CommentForm(data=request.POST)
         if comment_form.is_valid():
-            new_comment = comment_form.save(commit=False)
-            new_comment.deal = deal
-            new_comment.save()
+            if request.user.is_authenticated:
+                new_comment = comment_form.save(commit=False)
+                new_comment.deal = deal
+                new_comment.author = User.objects.get(username=request.user)
+                new_comment.save()
+            else:
+                new_comment = comment_form.save(commit=False)
+                new_comment.deal = deal
+                new_comment.save()
             return HttpResponseRedirect(reverse('deals:deal_detail', args=[deal.slug]))
     else:
         comment_form = CommentForm()
@@ -58,12 +66,12 @@ def deal_single(request, slug):
 def deals_by_category(request, slug):
     category = get_object_or_404(Category, slug=slug)
     categories = category.get_descendants().order_by('tree_id', 'id', 'name')
-    deals = Deal.objects.filter(category__in=category.get_descendants(include_self=True)).prefetch_related('comments', 'user_like')
-    print(request.META.get('HTTP_REFERER', '/'))
+    deals = Deal.objects.filter(category__in=category.get_descendants(include_self=True)).prefetch_related('comments', 'user_like', 'author')
+
     deals_list = helpers.pg_records(request, deals, 20)
 
-    content = {'category': category, 'deals_list': deals_list, 'categories': categories}
-    return render(request, 'deals/deal_cat_list.html', content)
+    context = {'category': category, 'deals_list': deals_list, 'categories': categories}
+    return render(request, 'deals/deal_cat_list.html', context)
 
 
 # TODO set crontab to delete expired sessions

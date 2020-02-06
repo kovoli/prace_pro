@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+
+{% block title %}PriceRace.ru | Профиль пользователя {{ user.username }} | скидки, комментарии и дискуссии{% endblock %}
+
+{% block content %}
+<div class="container">
+        <div class="row">
+            <div class="col-lg-9 px-0 order-2  mb-5">
+                <article class="deal-section-single p-3 mb-3">
+                  <nav>
+                      <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link active" id="nav-deals-tab" data-toggle="tab" href="#nav-deals" role="tab" aria-controls="nav-deals" aria-selected="true">Скидки</a>
+                        <a class="nav-item nav-link" id="nav-comments-tab" data-toggle="tab" href="#nav-comments" role="tab" aria-controls="nav-comments" aria-selected="false">Комментарии</a>
+                      </div>
+                  </nav>
+                  <div class="tab-content" id="nav-tabContent">
+                  <div class="tab-pane fade show active" id="nav-deals" role="tabpanel" aria-labelledby="nav-deals-tab">
+                  <ul class="list-unstyled my-3">
+                      {% for deal in deals_list %}
+                      <li class="media mb-3">
+                        <img class="mr-3" src="http://placehold.it/250x250" alt="{{ deal.name }}" height="50">
+                        <div class="media-body">
+                          <h6 class="mt-0 mb-1"><a class="text-decoration-none" href="{{ deal.get_absolute_url }}">{{ deal.name }}</a></h6>
+                          <span class="sale-price">{{ deal.price }} <i class="fas fa-ruble-sign"></i></span>
+                            <span class="deal-post-date flex-fill mr-1"><i class="far fa-calendar-alt"></i> {{ deal.create|date:"d.m.Y (H:i)" }}</span>
+                            <span class="like-heart"><i class="fas fa-heartbeat"></i> {{ deal.like_counter }}</span>
+                        </div>
+                      </li>
+                      {% empty %}
+                          <li class="media mb-3">
+                            <p>Вы пока не добавили ни одной скидки! Пора что-нибудь добавить.</p>
+                          </li>
+                      {% endfor %}
+                      <div>
+                        {% include 'includes/pagination.html' %}
+                      </div>
+                  </ul>
+                  </div>
+                  <div class="tab-pane fade" id="nav-comments" role="tabpanel" aria-labelledby="nav-comments-tab">
+                      <ul class="list-unstyled my-3">
+                      {% for comment in comments %}
+                      <li class="media mb-3">
+                        <div class="media-body">
+                            <span class="mr-2"><i class="far fa-thumbs-up"></i> {{ comment.like }}</span>
+                            <span class="mr-2"><i class="far fa-calendar-alt"></i> {{ comment.deal.create|date:"d.m.y" }}</span>
+                            <a class="text-decoration-none" href="{{ comment.deal.get_absolute_url }}">- {{ comment.deal.name }}</a>
+                            <p>{{ comment.body|truncatewords:40 }}</p>
+                        </div>
+                      </li>
+                      {% empty %}
+                          <li class="media mb-3">
+                            <p>Вы пока не прокомментировали ни одной скидки! Пора сказать свое мнение.</p>
+                          </li>
+                      {% endfor %}
+                  </ul>
+                  </div>
+                </div>
+                </article>
+            </div>
+            <aside class="col-lg-3 order-1 mb-3">
+                <div class="user-sidebar mb-3">
+                <div class="section-title">
+                    <h3>Профиль</h3>
+                </div>
+                    <div class="row justify-content-center">
+                        <img class="rounded img-fluid my-3" src="{{ user.profile.photo.url }}" alt="Generic placeholder image">
+                    </div>
+                    <div class="text-center">
+                        <span class="d-block"><i class="fas fa-user"></i> {{ user.username }}</span>
+                        <span class="d-inline"><i class="far fa-calendar-alt"></i> {{ user.date_joined|date:"d M. Y " }}</span>
+                    </div>
+                </div>
+
+                <div class="user-sidebar">
+                <div class="section-title">
+                    <h3>Статистика</h3>
+                </div>
+                    <div>
+                        <div class="my-2">Записей</div>
+                        <div><i class="fas fa-tag"></i>  {{ deals.count}} <small>скидок</small></div>
+                        <div><i class="fas fa-comments"></i>  {{ comments.count}} <small>комментариев</small></div>
+                        <div class="my-2">Активность</div>
+                        <div><i class="far fa-thumbs-up"></i> {{ user.user_like.count }} <small>Лайки/Дизлайки</small></div>
+
+                    </div>
+                </div>
+            </aside>
+        </div>
+</div>
+{% endblock %}

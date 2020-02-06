@@ -1,6 +1,7 @@
 from django.contrib.auth import login
 from django.contrib.auth.models import User
-from deals.models import Deal
+from deals.helpers import pg_records
+from deals.models import Deal, Comment
 from django.contrib.sites.shortcuts import get_current_site
 from django.shortcuts import render, redirect, get_object_or_404
 from django.template.loader import render_to_string
@@ -87,11 +88,12 @@ def edit(request):
                                                  'profile': profile})
 
 
-@login_required
 def profile(request, username):
-    username = request.user
+    username = User.objects.get(username=username)
     user = get_object_or_404(User, username=username)
     deals = Deal.objects.filter(author=user)
+    deals_list = pg_records(request, deals, 20)
+    comments = Comment.objects.filter(author=username)
 
-    context = {'user': user, 'deals': deals}
-    return render(request, 'account/profil.html', context)
+    context = {'user': user, 'deals_list': deals_list, 'comments': comments, 'deals': deals}
+    return render(request, 'account/profile.html', context)

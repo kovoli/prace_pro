@@ -47,8 +47,8 @@
                                     <span class="product-box__sticker">{{ deal.discount_procent }}%</span>
                                 </div>
                                 <div class="mb-2 pb-2 border-bottom d-flex">
-                                    <span class="author-deal flex-fill"><a href="#"> <i class="fas fa-user-edit"></i> kovoli</a></span>
-                                    <span class="deal-post-date flex-fill"><i class="far fa-calendar-alt"></i> 12.01.2012 (20:00)</span>
+                                    <span class="author-deal flex-fill"><a href="{{ deal.author.profile.get_absolute_url }}"> <i class="fas fa-user-edit"></i> {{ deal.author }}</a></span>
+                                    <span class="deal-post-date flex-fill"><i class="far fa-calendar-alt"></i> {{ deal.create|date:"d.m.Y (H:i)" }}</span>
                                     <span class="deal-comments ml-3 flex-fill"><a href="{{ deal.get_absolute_url }}#comment-area"><i class="far fa-comments"></i> ({{ deal.comments.count }})</a></span>
                                 </div>
                                 <div>
@@ -61,7 +61,7 @@
                 </article>
                 {% endfor %}
 
-                {% include 'deals/includes/pagination.html' %}
+                {% include 'includes/pagination.html' %}
 
             </div>
             <aside class="col-lg-3 order-2">

@@ -17,8 +17,8 @@ class Profile(models.Model):
     def __str__(self):
         return 'Профиль пользователя {}'.format(self.user.username)
 
-    # def get_absolute_url(self):
-    #     return reverse('profile', args=[self.user])
+    def get_absolute_url(self):
+         return reverse('profile', args=[self.user])
 
     class Meta:
         verbose_name = 'Профиль'
