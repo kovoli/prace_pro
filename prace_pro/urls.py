@@ -15,11 +15,24 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.contrib.sitemaps.views import sitemap
+from deals.sitemaps import DealSitemap
+from django.views.generic import TemplateView
+
+sitemaps = {'deals': DealSitemap}
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('deals.urls')),
     path('account/', include('account.urls')),
+    # sitemap
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
+    path('summernote/', include('django_summernote.urls')),
+]
+
+urlpatterns += [
+    path('robots.txt', TemplateView.as_view(template_name="robots.txt", content_type='text/plain')),
 ]
 
 from django.conf import settings

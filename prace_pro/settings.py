@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-
+SITE_ID = 1
 # Application definition
 
 INSTALLED_APPS = [
@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'account.apps.AccountConfig',
     'deals.apps.DealsConfig',
-    'django.contrib.sites'
+    'django.contrib.sites',
+    'django.contrib.sitemaps'
 ]
 
 # Extern Apps
@@ -50,7 +51,8 @@ INSTALLED_APPS += [
     'imagekit',
     'debug_toolbar',
     'widget_tweaks',
-    'six'
+    'six',
+    'django_summernote'
 ]
 
 MIDDLEWARE = [
@@ -133,7 +135,7 @@ USE_L10N = True
 USE_TZ = True
 
 
-SITE_ID = 1
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
@@ -157,3 +159,15 @@ LOGOUT_REDIRECT_URL = 'deals:home'
 #CSRF_USE_SESSIONS = True
 #CSRF_COOKIE_HTTPONLY = True
 
+SUMMERNOTE_THEME = 'bs4'
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+
+SUMMERNOTE_CONFIG = {
+    # Using SummernoteWidget - iframe mode, default
+    'iframe': True,
+
+    # Or, you can set it as False to use SummernoteInplaceWidget by default - no iframe mode
+    # In this case, you have to load Bootstrap/jQuery stuff by manually.
+    # Use this when you're already using Bootstraip/jQuery based themes.
+    #'iframe': False,
+}

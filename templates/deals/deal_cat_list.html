@@ -11,9 +11,9 @@
                 <article class="deal-section my-3">
                     <div class="row my-2">
                         <div class="col-md-4">
-                            <div class="product-box__image">
+                            <div class="product-box__image d-flex align-items-center justify-content-center">
                                 {% if deal.image %}
-                                    <a href="{{ deal.get_absolute_url }}"><img src="{{ deal.image.url }}" alt="{{ deal.name }}" class="img-fluid"></a>
+                                    <a href="{{ deal.get_absolute_url }}"><img src="{{ deal.image.url }}" alt="{{ deal.name }}" class="img-fluid deal-image"></a>
                                 {% else %}
                                     <a href="{{ deal.get_absolute_url }}"><img src="http://placehold.it/250x250" alt="product image" class="img-fluid"></a>
                                 {% endif %}
@@ -29,14 +29,14 @@
                                 </div>
                                 <div class="d-block w-100 mx-1">
                                     <div class="progress h-100">
-                                        <div id="progress-bar-{{ deal.id }}" class="progress-bar" role="progressbar" style="width: {{ click_counter }}0%" aria-valuenow="{{ click_counter }}" aria-valuemin="0" aria-valuemax="10"></div>
+                                        <div id="progress-bar-{{ deal_id }}" class="progress-bar" role="progressbar" style="width: {{ click_counter }}0%" aria-valuenow="{{ click_counter }}" aria-valuemin="0" aria-valuemax="10"></div>
                                     </div>
                                 </div>
                                     <div class="d-flex justify-content-between">
-                                        <button class="btn-like-{{ deal_id }} btn btn-sm btn-plus focus shadow-none like"  data-id="{{ deal.id }}" {% if request.user in deal.user_like.all or deal_id in session %}disabled{% endif %}><i class="fas fa-plus"></i></button>
+                                        <button class="btn-like-{{ deal_id }} btn btn-sm btn-plus focus shadow-none like"  data-id="{{ deal.id }}" {% if deal_id in session or request.user in deal.user_like.all %}disabled{% endif %}><i class="fas fa-plus"></i></button>
                                     </div>
                                     <div class="d-flex justify-content-between ml-1 rounded like-counter border">
-                                        <span class="mx-1 counter_like_deal_{{ deal.id }}">{{ click_counter }}</span>
+                                        <span class="mx-1 counter_like_deal_{{ deal_id }}">{{ click_counter }}</span>
                                         <span class="mx-1 like-heart"><i class="fas fa-heartbeat"></i></span>
                                     </div>
                                 {% endwith %}
@@ -46,7 +46,7 @@
                                     <span class="sale-price">{{ deal.price }} <i class="fas fa-ruble-sign"></i></span>
                                     <span class="regular-price">{{ deal.oldprice }} <i class="fas fa-ruble-sign"></i></span>
                                     <span class="product-box__sticker">{{ deal.discount_procent }}%</span>
-                                    <span class="deal-shop">от <a href="#" class="text-decoration-none"> {{ deal.shop }}</a></span>
+                                    <span class="deal-shop">от <a href="{{ deal.shop.get_absolute_url }}" class="text-decoration-none"> {{ deal.shop }}</a></span>
                                 </div>
                                 <div class="mb-2 pb-2 border-bottom d-flex">
                                     <span class="author-deal flex-fill"><a href="{{ deal.author.profile.get_absolute_url }}" class="text-decoration-none"> <i class="fas fa-user-edit"></i> {{ deal.author }}</a></span>
@@ -56,7 +56,7 @@
                                 <div>
                                     <span></span>
                                 </div>
-                                <p class="product-box__short-desc">Faded short sleeves t-shirt with high neckline. Soft and stretchy material for a comfortable fit. Accessorize with a straw hat and you're ready for summer!</p>
+                                <p class="product-box__short-desc">{{ deal.description|safe|truncatechars_html:155|striptags }}</p>
                             </div>
                         </div>
                     </div>
@@ -81,16 +81,16 @@
                 </div>
                 {% endif %}
                 <!-- Hot Deals -->
-                <div class="deals-slide_sidebar mb-3">
-                    <div class="section-title section-title--3 mb-2">
-                        <h3>Похожие скидки</h3>
-                    </div>
-                    <div class="sidebar-slider_cat">
-                        {% show_best_deals 10 %}
+                <div class="deals-slide_sidebar mt-3">
+                <div class="section-title  mb-2">
+                    <h3>Лучшие скидки</h3>
+                </div>
+                    <div class="sidebar-slider_home">
+                        {% show_best_deals  10 %}
                     </div>
                     <div class="d-flex justify-content-center">
-                        <span class="prev_arrow_cat mr-3"><i class="far fa-arrow-alt-circle-down"></i></span>
-                        <span class="next_arrow_cat ml-3"><i class="far fa-arrow-alt-circle-up"></i></span>
+                        <span class="prev_arrow_home mr-3"><i class="far fa-arrow-alt-circle-down"></i></span>
+                        <span class="next_arrow_home ml-3"><i class="far fa-arrow-alt-circle-up"></i></span>
                     </div>
                 </div>
                 <div class="deals-slide_sidebar mt-3">

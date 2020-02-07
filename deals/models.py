@@ -114,7 +114,7 @@ class Deal(models.Model):
 
     name = models.CharField(max_length=255)
     slug = models.SlugField(max_length=255, unique=True)
-    description = RichTextField(blank=True, null=True)
+    description = models.TextField(blank=True, null=True)
     create = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     price = models.DecimalField(decimal_places=2, max_digits=10)
