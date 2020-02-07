@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load deals_tags %}
 
 {% block title %}{{ category.name }}{% endblock %}
 
@@ -45,11 +46,12 @@
                                     <span class="sale-price">{{ deal.price }} <i class="fas fa-ruble-sign"></i></span>
                                     <span class="regular-price">{{ deal.oldprice }} <i class="fas fa-ruble-sign"></i></span>
                                     <span class="product-box__sticker">{{ deal.discount_procent }}%</span>
+                                    <span class="deal-shop">от <a href="#" class="text-decoration-none"> {{ deal.shop }}</a></span>
                                 </div>
                                 <div class="mb-2 pb-2 border-bottom d-flex">
-                                    <span class="author-deal flex-fill"><a href="{{ deal.author.profile.get_absolute_url }}"> <i class="fas fa-user-edit"></i> {{ deal.author }}</a></span>
+                                    <span class="author-deal flex-fill"><a href="{{ deal.author.profile.get_absolute_url }}" class="text-decoration-none"> <i class="fas fa-user-edit"></i> {{ deal.author }}</a></span>
                                     <span class="deal-post-date flex-fill"><i class="far fa-calendar-alt"></i> {{ deal.create|date:"d.m.Y (H:i)" }}</span>
-                                    <span class="deal-comments ml-3 flex-fill"><a href="{{ deal.get_absolute_url }}#comment-area"><i class="far fa-comments"></i> ({{ deal.comments.count }})</a></span>
+                                    <span class="deal-comments ml-3 flex-fill"><a href="{{ deal.get_absolute_url }}#comment-area" class="text-decoration-none"><i class="far fa-comments"></i> ({{ deal.comments.count }})</a></span>
                                 </div>
                                 <div>
                                     <span></span>
@@ -83,26 +85,25 @@
                     <div class="section-title section-title--3 mb-2">
                         <h3>Похожие скидки</h3>
                     </div>
-                        <div class="single-recent-post d-flex align-items-center">
-                            <a href="" class="single-recent-post__thumb">
-                                <img src="http://placehold.it/60x60" alt="Blog Thumb">
-                            </a>
-                            <div class="single-recent-post__content">
-                                <a href="" class="single-recent-post__title">This Is Second Post For XipBlog</a>
-                                <a href="" class="single-recent-post__date">26 September, 2018</a>
-                            </div>
-
-                        </div>
-                        <div class="single-recent-post d-flex align-items-center">
-                            <a href="" class="single-recent-post__thumb">
-                                <img src="http://placehold.it/60x60" alt="Blog Thumb">
-                            </a>
-                            <div class="single-recent-post__content">
-                                <a href="" class="single-recent-post__title">This Is Second Post For XipBlog</a>
-                                <a href="" class="single-recent-post__date">26 September, 2018</a>
-                            </div>
-
-                        </div>
+                    <div class="sidebar-slider_cat">
+                        {% show_best_deals 10 %}
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <span class="prev_arrow_cat mr-3"><i class="far fa-arrow-alt-circle-down"></i></span>
+                        <span class="next_arrow_cat ml-3"><i class="far fa-arrow-alt-circle-up"></i></span>
+                    </div>
+                </div>
+                <div class="deals-slide_sidebar mt-3">
+                <div class="section-title  mb-2">
+                    <h3>Лучшие магазины</h3>
+                </div>
+                    <div class="sidebar-slider_shops">
+                        {% show_favorite_shops 10 %}
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <span class="prev_arrow_shops mr-3"><i class="far fa-arrow-alt-circle-down"></i></span>
+                        <span class="next_arrow_shops ml-3"><i class="far fa-arrow-alt-circle-up"></i></span>
+                    </div>
                 </div>
             </aside>
         </div>

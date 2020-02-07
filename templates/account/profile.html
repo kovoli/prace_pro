@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load account_tags %}
 
 {% block title %}PriceRace.ru | Профиль пользователя {{ user.username }} | скидки, комментарии и дискуссии{% endblock %}
 
@@ -78,8 +78,8 @@
                 </div>
                     <div>
                         <div class="my-2 border-bottom">Записей</div>
-                        <div><i class="fas fa-tag mr-2"></i>  {{ deals.count}} <small>скидок</small></div>
-                        <div><i class="fas fa-comments mr-2"></i>  {{ comments.count}} <small>комментариев</small></div>
+                        <div><i class="fas fa-tag mr-2"></i>  {{ deals.count }} <small>{{ deals.count|pluralize_ru:"скидка, скидки, скидок"}}</small></div>
+                        <div><i class="fas fa-comments mr-2"></i>{{ comments.count }} <small>{{ comments.count|pluralize_ru:"комментарий, комментария, коментариев"}}</small></div>
                         <div class="my-2 border-bottom">Активность</div>
                         <div><i class="far fa-thumbs-up mr-2"></i> {{ user.user_like.count }} <small>Лайки/Дизлайки</small></div>
                     </div>

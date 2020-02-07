@@ -40,7 +40,7 @@ class Shop(models.Model):
         super(Shop, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return reverse('deals:shop', args=[self.slug])
+        return reverse('deals:deals_by_shop', args=[self.slug])
 
 
 class Brand(models.Model):

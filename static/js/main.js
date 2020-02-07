@@ -130,7 +130,7 @@ $(document).ready(function() {
     $('.sidebar-slider_shops').slick({
         vertical: true,
         infinite: true,
-        slidesToShow: 5,
+        slidesToShow: 2,
         slidesToScroll: 1,
         verticalSwiping: true,
         prevArrow: $('.prev_arrow_shops'),
@@ -145,6 +145,15 @@ $(document).ready(function() {
         verticalSwiping: true,
         prevArrow: $('.prev_arrow_home'),
         nextArrow: $('.next_arrow_home')
+  });
+    $('.sidebar-slider_cat').slick({
+        vertical: true,
+        infinite: true,
+        slidesToShow: 5,
+        slidesToScroll: 1,
+        verticalSwiping: true,
+        prevArrow: $('.prev_arrow_cat'),
+        nextArrow: $('.next_arrow_cat')
   });
 
     $('#comment_message').val('')

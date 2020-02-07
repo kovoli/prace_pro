@@ -8,6 +8,9 @@ a:hover {
     color: #155596;
     text-decoration: underline;
 }
+h1 {
+    font-size: 1.5rem;
+}
 .bg-own {
     background-color: #155596;
 }
@@ -115,6 +118,11 @@ a:hover {
     font-size: 0.7rem;
     color: #fa641e;
 }
+.sidebar-image {
+    height: 60px;
+    width: 60px;
+    margin-right: 1rem;
+}
 /* Deals List */
 .article-section {
     border-radius: 1rem;
@@ -126,6 +134,7 @@ a:hover {
 .product-box__image {
     position: relative;
     text-align: center;
+    height: 250px;
 }
 .btn-outline-own {
     padding: 0.5rem 0;
@@ -250,4 +259,8 @@ a .btn-outline-own  {
 
 .dropdown-menu-right {
     right: -2rem;
+}
+/* Shop Site */
+.extra-header {
+    background-color: #1555962e;
 }

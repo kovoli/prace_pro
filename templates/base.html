@@ -1,4 +1,6 @@
 {% load static %}
+
+
 <!doctype html>
 <html lang="ru">
   <head>
@@ -38,7 +40,7 @@
             </a>
 
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              {% for category in categories_nav %}
+              {% for category in categories %}
               <a class="dropdown-item" href="{{ category.get_absolute_url }}">{{ category.name }}</a>
               {% endfor %}
               <div class="dropdown-divider"></div>
@@ -81,13 +83,29 @@
     <!-- End Navigation -->
 
     <div class="wrapper">
-        {% block profile %}
+        {% block extra_header %}
         {% endblock %}
         <div class="section my-5">
             {% block content %}
             {% endblock %}
         </div>
     </div>
+    <!-- Footer -->
+    <footer class="bg-dark">
+
+      <!-- Footer Elements -->
+      <div class="container">
+
+      </div>
+      <!-- Footer Elements -->
+
+      <!-- Copyright -->
+      <div class="text-center py-3">© {% now "Y" %} Copyright: PriceRace.ru Все права защищены.
+      </div>
+      <!-- Copyright -->
+
+    </footer>
+    <!-- Footer -->
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

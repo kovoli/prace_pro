@@ -16,14 +16,14 @@ from django.db.models import Count
 
 
 def home_page(request):
-    deals = Deal.objects.all().prefetch_related('comments', 'user_like', 'author__profile')
+    deals = Deal.objects.all().prefetch_related('comments',
+                                                'user_like',
+                                                'author__profile',
+                                                'shop')
     deals_list = helpers.pg_records(request, deals, 20)
 
-    #
-    best_all_time = Deal.objects.all().order_by('-like_counter')[:10]
 
-    context = {'deals_list': deals_list,
-               'best_all_time': best_all_time}
+    context = {'deals_list': deals_list}
     return render(request, 'home_page.html', context)
 
 
@@ -36,8 +36,7 @@ def deal_single(request, slug):
     # Похожие товары
     semilar_products = Deal.objects.filter(category=deal.category) \
         .annotate(like_count=Count('user_like')).order_by('-like_count').exclude(id=deal.id)[:10]
-    # Лучшие магазины
-    favorite_shops = Shop.objects.filter(favorites=True)[:10]
+
     # Форма для комментариев
     new_comment = None
 
@@ -61,8 +60,7 @@ def deal_single(request, slug):
                'comments': comments,
                'new_comment': new_comment,
                'comment_form': comment_form,
-               'semilar_products': semilar_products,
-               'favorite_shops': favorite_shops}
+               'semilar_products': semilar_products}
 
     return render(request, 'deals/deal_single.html', context)
 
@@ -70,13 +68,24 @@ def deal_single(request, slug):
 def deals_by_category(request, slug):
     category = get_object_or_404(Category, slug=slug)
     categories = category.get_descendants().order_by('tree_id', 'id', 'name')
-    deals = Deal.objects.filter(category__in=category.get_descendants(include_self=True)).prefetch_related('comments', 'user_like', 'author__profile')
+    deals = Deal.objects.filter(category__in=category.get_descendants(include_self=True))\
+        .prefetch_related('comments', 'user_like', 'author__profile', 'shop')
 
     deals_list = helpers.pg_records(request, deals, 20)
 
     context = {'category': category, 'deals_list': deals_list, 'categories': categories}
     return render(request, 'deals/deal_cat_list.html', context)
 
+
+def deals_by_shop(request, slug):
+    shop = get_object_or_404(Shop, slug=slug)
+    deals_shop = Deal.objects.filter(shop=shop.id) \
+        .prefetch_related('comments', 'user_like', 'author__profile', 'shop')
+
+    deals_list = helpers.pg_records(request, deals_shop, 20)
+
+    context = {'shop': shop, 'deals_list': deals_list, 'deals_shop': deals_shop}
+    return render(request, 'deals/deals_by_shop.html', context)
 
 # TODO set crontab to delete expired sessions
 # @login_required

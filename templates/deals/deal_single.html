@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load mptt_tags %}
 {% load widget_tweaks %}
+{% load deals_tags %}
 
 {% block title %}{{ deal.name }}{% endblock %}
 
@@ -11,9 +12,9 @@
                 <article class="deal-section-single p-3 mb-3">
                     <div class="row">
                         <div class="col-md-4">
-                            <div class="product-box__image">
+                            <div class="product-box__image d-flex align-items-center">
                                 {% if deal.image %}
-                                <img src="{{ deal.image.url }}" alt="{{ deal.name }}" class="img-fluid">
+                                <img src="{{ deal.image.url }}" alt="{{ deal.name }}" class="img-fluid" >
                                 {% else %}
                                 <img src="http://placehold.it/250x250" alt="product image" class="img-fluid">
                                 {% endif %}
@@ -47,13 +48,13 @@
                                     <span class="sale-price">{{ deal.price }} <i class="fas fa-ruble-sign"></i></span>
                                     <span class="regular-price">{{ deal.oldprice }} <i class="fas fa-ruble-sign"></i></span>
                                     <span class="product-box__sticker">{{ deal.discount_procent }}%</span>
-                                    <span class="deal-shop">от <a href="#"> {{ deal.shop }}</a></span>
+                                    <span class="deal-shop">от <a href="{{ deal.shop.get_absolute_url }}" class="text-decoration-none"> {{ deal.shop }}</a></span>
                                 </div>
                                 <div class="mb-2 pb-2 d-flex">
-                                    <span class="author-deal flex-fill"><a href="{{ deal.author.profile.get_absolute_url }}"> <i class="fas fa-user-edit"></i> {{ deal.author }}</a></span>
+                                    <span class="author-deal flex-fill"><a href="{{ deal.author.profile.get_absolute_url }}" class="text-decoration-none"> <i class="fas fa-user-edit"></i> {{ deal.author }}</a></span>
                                     <span class="deal-post-date flex-fill"><i class="far fa-calendar-alt"></i> {{ deal.create|date:"d.m.Y (H:i)" }}</span>
                                     {% with comments.count as total_comments %}
-                                        <span class="deal-comments ml-3 flex-fill"><a href="#comment-area"><i class="far fa-comments"></i> ({{ total_comments }})</a></span>
+                                        <span class="deal-comments ml-3 flex-fill"><a href="#comment-area" class="text-decoration-none"><i class="far fa-comments"></i> ({{ total_comments }})</a></span>
                                     {% endwith %}
                                 </div>
                                 <div>
@@ -160,18 +161,7 @@
                     <h3>Лучшие магазины</h3>
                 </div>
                     <div class="sidebar-slider_shops">
-                            {% for shop in favorite_shops %}
-                            <div class="single-recent-post d-flex align-items-center">
-                                <a href="" class="single-recent-post__thumb">
-                                    <img src="http://placehold.it/60x60" alt="Blog Thumb">
-                                </a>
-                                <div class="single-recent-post__content">
-                                    <a href="" class="single-recent-post__title text-decoration-none">{{ shop.name }}</a>
-
-                                </div>
-                            </div>
-                            {% endfor %}
-
+                        {% show_favorite_shops 10 %}
                     </div>
                     <div class="d-flex justify-content-center">
                         <span class="prev_arrow_shops mr-3"><i class="far fa-arrow-alt-circle-down"></i></span>

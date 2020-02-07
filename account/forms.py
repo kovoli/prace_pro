@@ -29,12 +29,12 @@ class UserEditForm(forms.ModelForm):
         model = User
         fields = ('username', 'email')
 
-    # def clean_email(self):
-    #     email = self.cleaned_data.get('email')
-    #
-    #     if User.objects.filter(email=email).exists():
-    #         raise forms.ValidationError("Пользователь с таким адресом электронной почты уже существует")
-    #     return email
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        username = self.cleaned_data.get('username')
+        if User.objects.filter(email=email).exclude(username=username):
+            raise forms.ValidationError("Пользователь с таким адресом электронной почты уже существует")
+        return email
 
 
 class ProfileEditForm(forms.ModelForm):

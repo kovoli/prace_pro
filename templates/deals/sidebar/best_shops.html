@@ -1,0 +1,10 @@
+{% for shop in favorite_shops %}
+<div class="single-recent-post d-flex align-items-center">
+    <a href="" class="single-recent-post__thumb">
+        <img src="http://placehold.it/60x60" alt="Blog Thumb">
+    </a>
+    <div class="single-recent-post__content">
+        <a href="" class="single-recent-post__title text-decoration-none">{{ shop.name }}</a>
+    </div>
+</div>
+{% endfor %}
