@@ -1,14 +1,13 @@
 from django.contrib import admin
 from .models import Category, Deal, Brand, Shop, Comment
-from django_summernote.admin import SummernoteModelAdmin
 
 
 @admin.register(Deal)
-class DealAdmin(SummernoteModelAdmin):
+class DealAdmin(admin.ModelAdmin):
     list_display = ['name']
     list_filter = ['category']
     readonly_fields = ['slug']
-    summernote_fields = ('description',)
+
 
 
 @admin.register(Category)

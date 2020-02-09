@@ -24,10 +24,9 @@ $(document).ready(function() {
         return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
     }
     $.ajaxSetup({
-        crossDomain: false, // obviates need for sameOrigin test
-        beforeSend: function(xhr, settings) {
-            if (!csrfSafeMethod(settings.type)) {
-                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+    beforeSend: function(xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
             }
         }
     });
@@ -157,5 +156,10 @@ $(document).ready(function() {
   });
 
     $('#comment_message').val('')
+
+    $('#summernote').summernote({
+          dialogsInBody: true
+        //           //,airMode: true
+});
 
 });

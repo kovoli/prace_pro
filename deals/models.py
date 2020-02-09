@@ -5,6 +5,7 @@ from unidecode import unidecode
 from django.template.defaultfilters import slugify
 # Text-editor
 from ckeditor.fields import RichTextField
+from ckeditor_uploader.fields import RichTextUploadingField
 # Images
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFit
@@ -114,7 +115,7 @@ class Deal(models.Model):
 
     name = models.CharField(max_length=255)
     slug = models.SlugField(max_length=255, unique=True)
-    description = models.TextField(blank=True, null=True)
+    description = RichTextUploadingField(blank=True, null=True, config_name='default')
     create = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     price = models.DecimalField(decimal_places=2, max_digits=10)
@@ -168,7 +169,7 @@ class Deal(models.Model):
 
 class Comment(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
-    body = models.TextField()
+    body = RichTextField(config_name='default')
     created = models.DateTimeField(auto_now_add=True)
     deal = models.ForeignKey(Deal, related_name='comments', on_delete=models.CASCADE)
     active = models.BooleanField(default=True)

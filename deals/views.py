@@ -21,9 +21,12 @@ def home_page(request):
                                                 'author__profile',
                                                 'shop')
     deals_list = helpers.pg_records(request, deals, 20)
+    # Категории
+    categories = Category.objects.root_nodes()
 
 
-    context = {'deals_list': deals_list}
+    context = {'deals_list': deals_list,
+               'categories': categories}
     return render(request, 'home_page.html', context)
 
 
@@ -36,6 +39,8 @@ def deal_single(request, slug):
     # Похожие товары
     semilar_products = Deal.objects.filter(category=deal.category) \
         .annotate(like_count=Count('user_like')).order_by('-like_count').exclude(id=deal.id)[:10]
+    # Категории
+    categories = Category.objects.root_nodes()
 
     # Форма для комментариев
     new_comment = None
@@ -58,6 +63,7 @@ def deal_single(request, slug):
 
     context = {'deal': deal,
                'comments': comments,
+               'categories': categories,
                'new_comment': new_comment,
                'comment_form': comment_form,
                'semilar_products': semilar_products}
@@ -83,8 +89,13 @@ def deals_by_shop(request, slug):
         .prefetch_related('comments', 'user_like', 'author__profile', 'shop')
 
     deals_list = helpers.pg_records(request, deals_shop, 20)
+    # Категории
+    categories = Category.objects.root_nodes()
 
-    context = {'shop': shop, 'deals_list': deals_list, 'deals_shop': deals_shop}
+    context = {'shop': shop,
+               'deals_list': deals_list,
+               'deals_shop': deals_shop,
+               'categories': categories}
     return render(request, 'deals/deals_by_shop.html', context)
 
 # TODO set crontab to delete expired sessions

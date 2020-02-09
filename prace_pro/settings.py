@@ -47,12 +47,12 @@ INSTALLED_APPS = [
 INSTALLED_APPS += [
     'mptt',
     'ckeditor',
+    'ckeditor_uploader',
     'unidecode',
     'imagekit',
     'debug_toolbar',
     'widget_tweaks',
     'six',
-    'django_summernote'
 ]
 
 MIDDLEWARE = [
@@ -134,9 +134,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
-
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
@@ -158,16 +155,75 @@ LOGOUT_REDIRECT_URL = 'deals:home'
 #SESSION_COOKIE_SECURE = True
 #CSRF_USE_SESSIONS = True
 #CSRF_COOKIE_HTTPONLY = True
-
-SUMMERNOTE_THEME = 'bs4'
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 
-SUMMERNOTE_CONFIG = {
-    # Using SummernoteWidget - iframe mode, default
-    'iframe': True,
 
-    # Or, you can set it as False to use SummernoteInplaceWidget by default - no iframe mode
-    # In this case, you have to load Bootstrap/jQuery stuff by manually.
-    # Use this when you're already using Bootstraip/jQuery based themes.
-    #'iframe': False,
+CKEDITOR_UPLOAD_PATH = "uploads/"
+CKEDITOR_IMAGE_BACKEND = 'pillow'
+CKEDITOR_FORCE_JPEG_COMPRESSION = True
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'skin': 'moono',
+        'width': '100%',
+        # 'skin': 'office2013',
+        'toolbar_Basic': [
+            ['Source', '-', 'Bold', 'Italic']
+        ],
+        'toolbar_YourCustomToolbarConfig': [
+            {'name': 'document', 'items': ['Source', '-', 'Preview', '-', 'Templates']},
+            {'name': 'clipboard', 'items': ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']},
+            {'name': 'editing', 'items': ['Find', 'Replace', '-', 'SelectAll']},
+            {'name': 'forms',
+             'items': ['Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton',
+                       'HiddenField']},
+            '/',
+            {'name': 'basicstyles',
+             'items': ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat']},
+            {'name': 'paragraph',
+             'items': ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-',
+                       'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                       ]},
+            {'name': 'links', 'items': ['Link', 'Unlink', 'Anchor']},
+            {'name': 'insert',
+             'items': ['Image', 'Table', 'HorizontalRule', 'easyimage']},
+            '/',
+            {'name': 'styles', 'items': ['Styles', 'Format', 'FontSize']},
+            {'name': 'colors', 'items': ['TextColor', 'BGColor']},
+            {'name': 'tools', 'items': ['Maximize', 'ShowBlocks']},
+
+            '/',  # put this to force next toolbar on new line
+
+        ],
+        'toolbar': 'YourCustomToolbarConfig',  # put selected toolbar config here
+        #'toolbarGroups': [{ 'name': 'document', 'groups': [ 'mode', 'document', 'doctools' ] }],
+         #'height': 500,
+         #'width': '100%',
+        # 'filebrowserWindowHeight': 725,
+        # 'filebrowserWindowWidth': 940,
+        # 'toolbarCanCollapse': True,
+        # 'mathJaxLib': '//cdn.mathjax.org/mathjax/2.2-latest/MathJax.js?config=TeX-AMS_HTML',
+        'tabSpaces': 4,
+        'extraPlugins': ','.join([
+            #'uploadimage', # the upload image feature
+            # your extra plugins here
+            #'div',
+            #'autolink'
+            #'autoembed',
+            #'embedsemantic',
+            #'autogrow',
+            # 'devtools',
+            #'widget',
+            #'lineutils',
+            #'clipboard',
+            #'dialog',
+            #'dialogui',
+            #'elementspath'
+
+        ]),
+    }
 }
+
+
+
+

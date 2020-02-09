@@ -1,6 +1,4 @@
 {% load static %}
-
-
 <!doctype html>
 <html lang="ru">
   <head>
@@ -40,7 +38,7 @@
             </a>
 
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              {% for category in categories %}
+              {% for category in categories_nav %}
               <a class="dropdown-item" href="{{ category.get_absolute_url }}">{{ category.name }}</a>
               {% endfor %}
               <div class="dropdown-divider"></div>
@@ -114,6 +112,8 @@
     <script src="{% static 'js/popper.js' %}"></script>
     <script src="{% static 'slick/slick.min.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-lite.css" rel="stylesheet">
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-lite.js"></script>
 
   </body>
 </html>
