@@ -156,10 +156,4 @@ $(document).ready(function() {
   });
 
     $('#comment_message').val('')
-
-    $('#summernote').summernote({
-          dialogsInBody: true
-        //           //,airMode: true
-});
-
 });

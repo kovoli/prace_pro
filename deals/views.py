@@ -32,10 +32,10 @@ def home_page(request):
 
 def deal_single(request, slug):
     # Скидка
-    deal = get_object_or_404(Deal.objects.select_related('author__profile'), slug=slug)
+    deal = get_object_or_404(Deal.objects.select_related('author__profile', 'category'), slug=slug)
 
     # Комментраии
-    comments = deal.comments.filter(active=True)
+    comments = Comment.objects.filter(deal=deal, active=True).prefetch_related('author')
     # Похожие товары
     semilar_products = Deal.objects.filter(category=deal.category) \
         .annotate(like_count=Count('user_like')).order_by('-like_count').exclude(id=deal.id)[:10]

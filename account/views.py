@@ -90,10 +90,10 @@ def edit(request):
 
 def profile(request, username):
     username = User.objects.get(username=username)
-    user = get_object_or_404(User, username=username)
+    user = get_object_or_404(User.objects.select_related('profile'), username=username)
     deals = Deal.objects.filter(author=user)
     deals_list = pg_records(request, deals, 20)
-    comments = Comment.objects.filter(author=username)
+    comments = Comment.objects.filter(author=username).prefetch_related('deal')
 
     context = {'user': user, 'deals_list': deals_list, 'comments': comments, 'deals': deals}
     return render(request, 'account/profile.html', context)
