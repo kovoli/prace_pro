@@ -101,6 +101,17 @@ DATABASES = {
     }
 }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'mydatabase',
+#         'USER': 'mydatabaseuser',
+#         'PASSWORD': 'mypassword',
+#         'HOST': '127.0.0.1',
+#         'PORT': '5432',
+#     }
+# }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -152,10 +163,11 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 LOGOUT_REDIRECT_URL = 'deals:home'
 
-#SESSION_COOKIE_SECURE = True
-#CSRF_USE_SESSIONS = True
-#CSRF_COOKIE_HTTPONLY = True
-X_FRAME_OPTIONS = 'SAMEORIGIN'
+#SESSION_COOKIE_SECURE = True  # Это работает в продукшен
+#CSRF_USE_SESSIONS = True      # Это не работает не в деф. не в прод.
+#CSRF_COOKIE_HTTPONLY = True   # Это не работает не в деф. не в прод.
+
+#X_FRAME_OPTIONS = 'SAMEORIGIN' # Необходимо было для ыгььуктщеу но может и понадобиться ckeditor
 
 
 CKEDITOR_UPLOAD_PATH = "uploads/"
@@ -164,7 +176,7 @@ CKEDITOR_FORCE_JPEG_COMPRESSION = True
 
 CKEDITOR_CONFIGS = {
     'default': {
-        'skin': 'moono',
+        #'skin': 'n1theme',
         'width': '100%',
         # 'skin': 'office2013',
         'toolbar_Basic': [
@@ -219,7 +231,6 @@ CKEDITOR_CONFIGS = {
             #'dialog',
             #'dialogui',
             #'elementspath'
-
         ]),
     }
 }

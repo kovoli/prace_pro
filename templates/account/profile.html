@@ -18,7 +18,7 @@
                   <div class="tab-pane fade show active" id="nav-deals" role="tabpanel" aria-labelledby="nav-deals-tab">
                   <ul class="list-unstyled my-3">
                       {% for deal in deals_list %}
-                      <li class="media mb-3">
+                      <li class="media mb-3 border-bottom">
                         <img class="mr-3" src="http://placehold.it/250x250" alt="{{ deal.name }}" height="50">
                         <div class="media-body">
                           <h6 class="mt-0 mb-1"><a class="text-decoration-none" href="{{ deal.get_absolute_url }}">{{ deal.name }}</a></h6>
@@ -40,12 +40,13 @@
                   <div class="tab-pane fade" id="nav-comments" role="tabpanel" aria-labelledby="nav-comments-tab">
                       <ul class="list-unstyled my-3">
                       {% for comment in comments %}
-                      <li class="media mb-3">
+                      <li class="media mb-3 border-bottom">
                         <div class="media-body">
                             <span class="mr-2"><i class="far fa-thumbs-up"></i> {{ comment.like }}</span>
                             <span class="mr-2"><i class="far fa-calendar-alt"></i> {{ comment.deal.create|date:"d.m.y" }}</span>
                             <a class="text-decoration-none" href="{{ comment.deal.get_absolute_url }}">- {{ comment.deal.name }}</a>
-                            <p>{{ comment.body|truncatewords:40 }}</p>
+                            <p>{{ comment.body|safe|truncatewords:40 }}</p>
+
                         </div>
                       </li>
                       {% empty %}

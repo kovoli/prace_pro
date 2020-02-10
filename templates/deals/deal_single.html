@@ -106,9 +106,7 @@
                             <div class="row">
                             <div class="form__group col-12">
 
-                               <form action="." method="post" enctype="multipart/form-data" novalidate >
-                                    {{ comment_form.media }}
-
+                               <form action="." method="post" enctype="multipart/form-data">
                                  {% render_field comment_form.body class="form__input form__input--textarea" id="comment_message" %}
                                     {% csrf_token %}
                                     <button type="submit" class="btn comment-btn">Submit</button>

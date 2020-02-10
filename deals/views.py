@@ -1,10 +1,10 @@
 from django.shortcuts import render, get_object_or_404, HttpResponseRedirect, reverse
-from .models import Deal, Category, Brand, Shop, Comment
+from .models import Deal, Category, Shop, Comment
 from django.contrib.auth.models import User
 from django.http import HttpResponse, JsonResponse
 from .forms import CommentForm
 import json
-from . import helpers
+from common import helpers
 from django.db.models import F
 # decorators
 # from django.contrib.auth.decorators import login_required

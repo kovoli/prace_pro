@@ -169,7 +169,7 @@ class Deal(models.Model):
 
 class Comment(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
-    body = RichTextField(config_name='default')
+    body = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
     deal = models.ForeignKey(Deal, related_name='comments', on_delete=models.CASCADE)
     active = models.BooleanField(default=True)
