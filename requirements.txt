@@ -6,6 +6,7 @@ django-debug-toolbar==2.2
 django-imagekit==4.0.2
 django-js-asset==1.2.2
 django-mptt==0.11.0
+django-watson==1.5.4
 django-widget-tweaks==1.4.5
 pilkit==2.0
 Pillow==7.0.0

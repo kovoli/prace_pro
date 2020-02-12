@@ -53,6 +53,7 @@ INSTALLED_APPS += [
     'debug_toolbar',
     'widget_tweaks',
     'six',
+    'watson'
 ]
 
 MIDDLEWARE = [

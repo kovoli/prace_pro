@@ -52,12 +52,14 @@
         </ul>
         <form class="form-inline my-2 my-lg-0 mr-2">
           <div class="input-group">
-            <input type="text" class="form-control" placeholder="Поиск . . .">
-            <div class="input-group-append">
-              <button class="btn btn-own" type="button">
-                <i class="fa fa-search"></i>
-              </button>
-            </div>
+            <form action="{% url 'deals:search_deals' %}" method="get">
+                <input type="text" name="q" class="form-control" placeholder="Поиск . . .">
+                <div class="input-group-append">
+                  <button class="btn btn-own" type="submit">
+                    <i class="fa fa-search"></i>
+                  </button>
+                </div>
+            </form>
           </div>
         </form>
       </div>

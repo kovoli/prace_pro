@@ -13,6 +13,8 @@ from common.decorators import ajax_required
 # sessions
 from .click import ClickComment, ClickDeal
 from django.db.models import Count
+# Search
+from watson import search as watson
 
 
 def home_page(request):
@@ -97,6 +99,15 @@ def deals_by_shop(request, slug):
                'deals_shop': deals_shop,
                'categories': categories}
     return render(request, 'deals/deals_by_shop.html', context)
+
+
+def search_deals(request):
+    if 'q' in request.GET:
+        q = request.GET['q']
+        search_list = watson.filter(Deal, q)
+        deals_list = helpers.pg_records(request, search_list, 54)
+    return render(request, 'deals/search_deals.html', {'q': q, 'deals_list': deals_list})
+
 
 # TODO set crontab to delete expired sessions
 # @login_required

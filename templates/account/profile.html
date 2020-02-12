@@ -67,9 +67,9 @@
                 </div>
                     <div class="row justify-content-center">
                         {% if user.profile.photo %}
-                            <img class="rounded img-fluid my-3" src="{{ user.profile.photo.url }}" alt="Скидки от {{ user.username }}" height="100">
+                            <img class="rounded-circle img-fluid my-3" src="{{ user.profile.photo.url }}" alt="Скидки от {{ user.username }}" height="100">
                         {% else %}
-                            <img class="rounded img-fluid my-3 profile-sidebar-image" src="{% static 'images/profile_logo.png' %}" alt="Скидки от {{ user.username }}">
+                            <img class="rounded-circle img-fluid my-3 profile-sidebar-image" src="{% static 'images/profile_logo.png' %}" alt="Скидки от {{ user.username }}">
                         {% endif %}
                     </div>
                     <div class="text-center">

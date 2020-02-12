@@ -11,4 +11,5 @@ urlpatterns = [
     path('like_dislike/dislike/', views.dislike_deal, name='like_dislike'),
     path('category/<slug:slug>/', views.deals_by_category, name='deals_by_category'),
     path('shop/<slug:slug>/', views.deals_by_shop, name='deals_by_shop'),
+    path('search/', views.search_deals, name='search_deals'),
 ]
