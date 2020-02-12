@@ -290,3 +290,13 @@ a .btn-outline-own  {
   color: #9897A0;
   font-size: 14px;
 }
+
+/* PROFILE */
+.profile-menu-image {
+    max-height: 26px;
+    max-width: 26px;
+}
+.profile-sidebar-image {
+    max-height: 100px;
+    max-width: 100px;
+}

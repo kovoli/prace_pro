@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load account_tags %}
+{% load static %}
 
 {% block title %}PriceRace.ru | Профиль пользователя {{ user.username }} | скидки, комментарии и дискуссии{% endblock %}
 
@@ -65,7 +66,11 @@
                     <h3>Профиль</h3>
                 </div>
                     <div class="row justify-content-center">
-                        <img class="rounded img-fluid my-3" src="{{ user.profile.photo.url }}" alt="Generic placeholder image">
+                        {% if user.profile.photo %}
+                            <img class="rounded img-fluid my-3" src="{{ user.profile.photo.url }}" alt="Скидки от {{ user.username }}" height="100">
+                        {% else %}
+                            <img class="rounded img-fluid my-3 profile-sidebar-image" src="{% static 'images/profile_logo.png' %}" alt="Скидки от {{ user.username }}">
+                        {% endif %}
                     </div>
                     <div class="text-center">
                         <span class="d-block"><i class="fas fa-user"></i> {{ user.username }}</span>

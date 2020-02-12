@@ -28,9 +28,13 @@ def activate(request, uidb64, token):
         new_user.is_active = True
         # set signup_confirmation true
         new_user.save()
-        login(request, new_user)
-        return redirect('deals:home')
+        messages.success(request, 'Вы успешно прошли регистрацию. Введите свой логин и пароль.')
+        #login(request, new_user)
+        return redirect('login')
     else:
+        messages.error(request, 'Произошла ошибка при регистрации. '
+                                'Пройдите процесс регистрации ещё раз. '
+                                'Или напишите в потдержку.')
         return render(request, 'registration/activation_invalid.html')
 
 
@@ -46,7 +50,7 @@ def register(request):
             Profile.objects.create(user=new_user)
             # Activation token
             current_site = get_current_site(request)
-            subject = 'Пожалуйста, активируйте свою учетную запись'
+            subject = 'Pricerace.ru - Пожалуйста, активируйте свою учетную запись'
             message = render_to_string('registration/activation_request.html', {
                 'user': new_user,
                 'protocol': request.scheme,

@@ -66,7 +66,11 @@
           {% else %}
               <div class="dropdown">
                 <button id="profil" type="button" class="btn btn-outline-light dropdown-toggle login_in" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {% if request.user.profile.photo %}<img class="rounded-circle" src="{{ request.user.profile.photo.url }}" width="30" height="30">{% endif %}
+                    {% if request.user.profile.photo %}
+                        <img class="rounded-circle profile-menu-image" src="{{ request.user.profile.photo.url }}">
+                    {% else %}
+                        <img class="rounded-circle profile-menu-image" src="{% static 'images/profile_logo.png' %}">
+                    {% endif %}
                     <span class="align-middle ml-1">{{ request.user }}</span>
                 </button>
               <div class="dropdown-menu dropdown-menu-right mt-1" aria-labelledby="profil">
@@ -98,7 +102,7 @@
       <!-- Footer Elements -->
 
       <!-- Copyright -->
-      <div class="text-center py-3">© {% now "Y" %} Copyright: PriceRace.ru Все права защищены.
+      <div class="text-center py-3 ">© {% now "Y" %} Copyright: PriceRace.ru Все права защищены.
       </div>
       <!-- Copyright -->
 
@@ -112,8 +116,6 @@
     <script src="{% static 'js/popper.js' %}"></script>
     <script src="{% static 'slick/slick.min.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-lite.css" rel="stylesheet">
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-lite.js"></script>
 
   </body>
 </html>
