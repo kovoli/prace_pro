@@ -163,8 +163,8 @@ INTERNAL_IPS = [
 
 # EMAIL SETTINGS
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'kovoli1985@@gmail.com'
-EMAIL_HOST_PASSWORD = 'Blago1985dat!'
+EMAIL_HOST_USER = 'gmail.com'
+EMAIL_HOST_PASSWORD = ''
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
