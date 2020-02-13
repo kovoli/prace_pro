@@ -55,13 +55,13 @@ h1 {
 }
 
 /* Sidebar */
-.list-group-item {
+.list-group-item.sidebar {
     padding: 0.5rem 0rem;
     border: none;
     -webkit-transition: padding-left 200ms; /* For Safari 3.1 to 6.0 */
     transition: padding-left 200ms;
 }
-.list-group-item:hover {
+.list-group-item.sidebar:hover {
     padding-left: .3rem;
 }
 .section-title {
@@ -299,4 +299,47 @@ a .btn-outline-own  {
 .profile-sidebar-image {
     max-height: 100px;
     max-width: 100px;
+}
+
+/* Scroll Up Button */
+#button-scroll-up {
+  display: inline-block;
+  background-color: #fa641e;
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  border-radius: 4px;
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  transition: background-color .3s,
+    opacity .5s, visibility .5s;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 1000;
+}
+#button-scroll-up::after {
+  content: "\f106";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  font-style: normal;
+  font-size: 2em;
+  line-height: 50px;
+  color: #fff;
+}
+#button-scroll-up:hover {
+  cursor: pointer;
+  background-color: #333;
+}
+#button-scroll-up:active {
+  background-color: #555;
+}
+#button-scroll-up.show {
+  opacity: 1;
+  visibility: visible;
+}
+@media only screen and ( max-width: 767px ) {
+    #button-scroll-up{
+        display:none !important;
+    }
 }

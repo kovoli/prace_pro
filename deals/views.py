@@ -85,6 +85,12 @@ def deals_by_category(request, slug):
     return render(request, 'deals/deal_cat_list.html', context)
 
 
+def all_categories(request):
+    all_categories = Category.objects.root_nodes()
+    context = {'all_categories': all_categories}
+    return render(request, 'deals/all_categories.html', context)
+
+
 def deals_by_shop(request, slug):
     shop = get_object_or_404(Shop, slug=slug)
     deals_shop = Deal.objects.filter(shop=shop.id) \
@@ -104,7 +110,10 @@ def deals_by_shop(request, slug):
 def search_deals(request):
     if 'q' in request.GET:
         q = request.GET['q']
-        search_list = watson.filter(Deal, q)
+        search_list = watson.filter(Deal.objects.prefetch_related('comments', 
+                                                                  'user_like',
+                                                                  'author__profile',
+                                                                  'shop'), q)
         deals_list = helpers.pg_records(request, search_list, 54)
     return render(request, 'deals/search_deals.html', {'q': q, 'deals_list': deals_list})
 

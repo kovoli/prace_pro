@@ -44,9 +44,6 @@ $(document).ready(function() {
             success: function(data) {
                     $(".counter_like_" + data['id']).text(data['comment'])
             },
-            error: function(d) {
-                console.log(d);
-            }
         });
     });
 
@@ -70,12 +67,7 @@ $(document).ready(function() {
                     if (session_id[id_deal] === 'like') {
                         $(".btn-like-" + id_deal ).attr('disabled', true);
                     }
-
-                    console.log(session_id[id_deal])
             },
-            error: function(d) {
-                console.log(d);
-            }
         });
     });
 
@@ -100,9 +92,6 @@ $(document).ready(function() {
                         $(".btn-like-" + id_deal ).attr('disabled', true);
                 }
             },
-            error: function(d) {
-                console.log(d);
-            }
         });
     });
 
@@ -154,6 +143,21 @@ $(document).ready(function() {
         prevArrow: $('.prev_arrow_cat'),
         nextArrow: $('.next_arrow_cat')
   });
+
+    var btn = $('#button-scroll-up');
+
+    $(window).scroll(function() {
+      if ($(window).scrollTop() > 300) {
+        btn.addClass('show');
+      } else {
+        btn.removeClass('show');
+      }
+    });
+
+    btn.on('click', function(e) {
+      e.preventDefault();
+      $('html, body').animate({scrollTop:0}, '300');
+    });
 
     $('#comment_message').val('')
 });

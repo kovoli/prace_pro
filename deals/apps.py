@@ -7,4 +7,4 @@ class DealsConfig(AppConfig):
 
     def ready(self):
         deals = self.get_model('Deal')
-        watson.register(deals)
+        watson.register(deals, fields=('name', 'description'))
