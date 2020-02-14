@@ -11,7 +11,7 @@
                 <article class="deal-section-single p-3 mb-3">
                 {% for category in all_categories %}
                     <div class="border-bottom ">
-                        <div class="text-center py-2 mt-2"><h4>{{ category }}</h4></div>
+                        <div class="text-center py-2 mt-2"><h4><a href="{{ category.get_absolute_url }}" class="text-decoration-none">{{ category }}</a></h4></div>
                             <div class="row">
                                 {% for under_category in category.get_descendants %}
                                     <div class="col p-3 d-flex justify-content-center">

@@ -35,7 +35,7 @@ def home_page(request):
 def deal_single(request, slug):
     # Скидка
     deal = get_object_or_404(Deal.objects.select_related('author__profile', 'category'), slug=slug)
-
+    breadcrumbs = Category.get_ancestors(deal.category, include_self=True)
     # Комментраии
     comments = Comment.objects.filter(deal=deal, active=True).prefetch_related('author')
     # Похожие товары
@@ -64,6 +64,7 @@ def deal_single(request, slug):
         comment_form = CommentForm()
 
     context = {'deal': deal,
+               'breadcrumbs': breadcrumbs,
                'comments': comments,
                'categories': categories,
                'new_comment': new_comment,
@@ -76,12 +77,16 @@ def deal_single(request, slug):
 def deals_by_category(request, slug):
     category = get_object_or_404(Category, slug=slug)
     categories = category.get_descendants().order_by('tree_id', 'id', 'name')
+    breadcrumbs = Category.get_ancestors(category, include_self=True)
     deals = Deal.objects.filter(category__in=category.get_descendants(include_self=True))\
         .prefetch_related('comments', 'user_like', 'author__profile', 'shop')
 
     deals_list = helpers.pg_records(request, deals, 20)
 
-    context = {'category': category, 'deals_list': deals_list, 'categories': categories}
+    context = {'category': category,
+               'deals_list': deals_list,
+               'categories': categories,
+               'breadcrumbs': breadcrumbs}
     return render(request, 'deals/deal_cat_list.html', context)
 
 

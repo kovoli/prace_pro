@@ -3,6 +3,19 @@
 
 {% block title %}{{ category.name }}{% endblock %}
 
+{% block extra_header %}
+<nav aria-label="breadcrumb" class="breadcrumb_fluid bg-light">
+    <div class="container px-0">
+      <ol class="breadcrumb d-flex bg-transparent">
+        <li class="breadcrumb-item"><a href="{% url 'deals:home' %}" class="text-decoration-none">Главная</a></li>
+        {% for bc in breadcrumbs %}
+        <li class="breadcrumb-item"><a href="{{ bc.get_absolute_url }}" class="text-decoration-none">{{ bc.name }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+</nav>
+{% endblock %}
+
 {% block content %}
     <div class="container">
         <div class="row">
