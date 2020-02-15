@@ -126,6 +126,18 @@ h1 {
 .image-sidebar {
     max-height: 60px;
 }
+#id_brand {
+    list-style: none;
+    padding-left: 0;
+}
+.input_brand {
+    margin-right: 0.8rem;
+}
+div#brand_liste {
+    max-height: 300px;
+    overflow-y: scroll;
+}
+
 /* Deals List */
 .article-section {
     border-radius: 1rem;
@@ -342,4 +354,8 @@ a .btn-outline-own  {
     #button-scroll-up{
         display:none !important;
     }
+}
+
+.footer-text {
+    color: #ffffff;
 }

@@ -67,9 +67,15 @@
                                 <a href="{{ deal.get_absolute_url }}" class="product-box__title ">{{ deal.name }}</a>
                                 <div class="mb-2">
                                     <span class="sale-price">{{ deal.price }} <i class="fas fa-ruble-sign"></i></span>
+                                    {% if deal.oldprice %}
                                     <span class="regular-price">{{ deal.oldprice }} <i class="fas fa-ruble-sign"></i></span>
+                                    {% endif %}
+                                    {% if deal.discount_procent %}
                                     <span class="product-box__sticker">{{ deal.discount_procent }}%</span>
+                                    {% endif %}
+                                    {% if deal.shop %}
                                     <span class="deal-shop">от <a href="{{ deal.shop.get_absolute_url }}" class="text-decoration-none"> {{ deal.shop }}</a></span>
+                                    {% endif %}
                                 </div>
                                 <div class="mb-2 pb-2 border-bottom d-flex">
                                     <span class="author-deal flex-fill"><a href="{{ deal.author.profile.get_absolute_url }}" class="text-decoration-none"> <i class="fas fa-user-edit"></i> {{ deal.author }}</a></span>

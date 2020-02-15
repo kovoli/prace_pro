@@ -1,8 +1,8 @@
 from django.shortcuts import render, get_object_or_404, HttpResponseRedirect, reverse
-from .models import Deal, Category, Shop, Comment
+from .models import Deal, Category, Shop, Comment, Brand
 from django.contrib.auth.models import User
 from django.http import HttpResponse, JsonResponse
-from .forms import CommentForm
+from .forms import CommentForm, FilterByBrand
 import json
 from common import helpers
 from django.db.models import F
@@ -81,12 +81,22 @@ def deals_by_category(request, slug):
     deals = Deal.objects.filter(category__in=category.get_descendants(include_self=True))\
         .prefetch_related('comments', 'user_like', 'author__profile', 'shop')
 
+    # Brand Filter
+    brands_ids = deals.values_list('brand__id', flat=True).order_by().distinct()
+
+    brand_filter = FilterByBrand(request.GET)
+    brand_filter.fields['brand'].queryset = Brand.objects.filter(id__in=brands_ids)
+
     deals_list = helpers.pg_records(request, deals, 20)
+
+    if brand_filter.is_valid() and brand_filter.cleaned_data['brand']:
+        deals_list = helpers.pg_records(request, deals.filter(brand__in=brand_filter.cleaned_data['brand']), 20)
 
     context = {'category': category,
                'deals_list': deals_list,
                'categories': categories,
-               'breadcrumbs': breadcrumbs}
+               'breadcrumbs': breadcrumbs,
+               'brand_filter': brand_filter}
     return render(request, 'deals/deal_cat_list.html', context)
 
 

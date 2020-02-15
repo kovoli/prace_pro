@@ -159,5 +159,7 @@ $(document).ready(function() {
       $('html, body').animate({scrollTop:0}, '300');
     });
 
+    $('#id_brand').attr({'data-spy': "scroll", "data-offset":"0", "data-target": "#brand_liste"})
+
     $('#comment_message').val('')
 });

@@ -161,12 +161,6 @@ class Deal(models.Model):
         return reverse('deals:deal_detail', args=[self.slug])
 
 
-# class LikeDislike(models.Model):
-#     deal = models.ForeignKey(Deal, on_delete=models.CASCADE, related_name='likes')
-#     user_like = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='user_like', blank=True)
-#     like_counter = models.SmallIntegerField(default=0)
-
-
 class Comment(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
     body = models.TextField()
