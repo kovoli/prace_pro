@@ -1,11 +1,17 @@
 from django import forms
 from django.contrib.auth.models import User
 from .models import Profile
-
+from captcha.widgets import ReCaptchaV2Checkbox
+from captcha.fields import ReCaptchaField
 
 class UserRegistrationForm(forms.ModelForm):
     password = forms.CharField(label='Пароль', widget=forms.PasswordInput)
     password2 = forms.CharField(label='Повторите пароль', widget=forms.PasswordInput)
+    captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox(
+        attrs={'data-theme': 'dark', 'data-callback': "enableBtn",
+               'data-size': 'normal'}),
+        label='Поставьте галочку', required=True)
+
 
     class Meta:
         model = User

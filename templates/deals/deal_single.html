@@ -85,9 +85,9 @@
                     <div class="deal-desc my-3">
                         {{ deal.description|safe }}
                     </div>
-                    <div class="deal-footer border-top d-flex align-items-end">
-                        Share links | Beitrag melden
-                    </div>
+{#                    <div class="deal-footer border-top d-flex align-items-end">#}
+{#                        Share links | Beitrag melden#}
+{#                    </div>#}
                 </article>
                 {% for comment in comments %}
                 <article id="comment-area" class="deal-section-single deal-comments p-3 mb-1">
@@ -125,12 +125,18 @@
                             <div class="row">
                             <div class="form__group col-12">
 
-                               <form action="." method="post" enctype="multipart/form-data">
+                               <form action="." method="post" enctype="multipart/form-data" id="comment_form">
                                  {% render_field comment_form.body class="form__input form__input--textarea" id="comment_message" %}
-                                    {% csrf_token %}
-                                    <button type="submit" class="btn comment-btn">Submit</button>
+                                 {{ comment_form.captcha }}
+                                 {% csrf_token %}
+                                 <button type="submit" class="btn comment-btn" id="capcha_enable">Отправить</button>
                                 </form>
-
+                                <script type="application/javascript">
+                                    document.getElementById("capcha_enable").disabled = true;
+                                    function enableBtn(){
+                                        document.getElementById("capcha_enable").disabled = false;
+                                        }
+                                </script>
                              </div>
                             </div>
                         {% endif %}

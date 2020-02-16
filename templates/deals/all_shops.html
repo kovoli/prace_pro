@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load deals_tags %}
+{% load static %}
+
+{% block title %}Обзор всех магазинов на Pricerace.ru{% endblock %}
+
+{% block content %}
+<div class="container">
+        <div class="row">
+            <div class="col-lg-9 px-0 order-1  mb-5">
+                <article class="deal-section-single p-3 mb-3">
+                <div class="row">
+                    {% for shop in all_shops %}
+                        <div class="col-4 my-3">
+                            <div class="media">
+                                  {% if shop.shop_image %}
+                                    <img src="{{ shop.shop_image.url }}" class="mr-2 shop-list-img" alt="Скидки в магазине {{ shop.name }}" >
+                                  {% else %}
+                                    <img src="{% static 'images/shop.png' %}" class="mr-2 shop-list-img" alt="Скидки в магазине {{ shop.name }}">
+                                  {% endif %}
+                              <div class="media-body align-self-center">
+                                <h5>{{ shop.name }}</h5>
+                              </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                </article>
+            </div>
+            <aside class="col-lg-3 order-2">
+                <!-- Hot Deals -->
+                <div class="deals-slide_sidebar mb-3">
+                <div class="section-title  mb-2">
+                    <h3>Похожие скидки</h3>
+                </div>
+                    <div class="sidebar-slider">
+                        {% show_best_deals  10 %}
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <span class="prev_arrow mr-3"><i class="far fa-arrow-alt-circle-down"></i></span>
+                        <span class="next_arrow ml-3"><i class="far fa-arrow-alt-circle-up"></i></span>
+                    </div>
+                    <div class="slick-dots control_slide"></div>
+                </div>
+
+                <div class="deals-slide_sidebar mt-3">
+                <div class="section-title  mb-2">
+                    <h3>Лучшие магазины</h3>
+                </div>
+                    <div class="sidebar-slider_shops">
+                        {% show_favorite_shops 10 %}
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <span class="prev_arrow_shops mr-3"><i class="far fa-arrow-alt-circle-down"></i></span>
+                        <span class="next_arrow_shops ml-3"><i class="far fa-arrow-alt-circle-up"></i></span>
+                    </div>
+                </div>
+
+            </aside>
+        </div>
+</div>
+{% endblock %}

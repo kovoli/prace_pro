@@ -3,7 +3,6 @@ from .models import Deal, Category, Shop, Comment, Brand
 from django.contrib.auth.models import User
 from django.http import HttpResponse, JsonResponse
 from .forms import CommentForm, FilterByBrand
-import json
 from common import helpers
 from django.db.models import F
 # decorators
@@ -15,6 +14,10 @@ from .click import ClickComment, ClickDeal
 from django.db.models import Count
 # Search
 from watson import search as watson
+# Recaptcha
+import json
+
+from django.conf import settings
 
 
 def home_page(request):
@@ -104,6 +107,12 @@ def all_categories(request):
     all_categories = Category.objects.root_nodes()
     context = {'all_categories': all_categories}
     return render(request, 'deals/all_categories.html', context)
+
+
+def all_shops(request):
+    all_shops = Shop.objects.all()
+    context = {'all_shops': all_shops}
+    return render(request, 'deals/all_shops.html', context)
 
 
 def deals_by_shop(request, slug):

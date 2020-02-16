@@ -42,8 +42,14 @@
                       {% endfor %}
               {% csrf_token %}
             </div>
-              <button type="submit" class="btn btn-own">Зарегестрироваться</button>
+              <button type="submit" class="btn btn-own" id="capcha_enable_register">Зарегестрироваться</button>
             </form>
+            <script type="application/javascript">
+                document.getElementById("capcha_enable_register").disabled = true;
+                function enableBtn(){
+                    document.getElementById("capcha_enable_register").disabled = false;
+                    }
+            </script>
 </article>
 </div>
 </div>
