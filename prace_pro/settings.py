@@ -179,7 +179,7 @@ LOGOUT_REDIRECT_URL = 'deals:home'
 #TODO При развертывание поменять сайт на Google recaptcha
 # ReCapchav3
 RECAPTCHA_PUBLIC_KEY = '6LcmaNkUAAAAAPvxMme7GwoV2ynnrZZE2iHwhMmp'
-RECAPTCHA_PRIVATE_KEY = '6LcmaNkUAAAAAMTHasZVEKKXyt0jkk0Ei3J9CMqY'
+RECAPTCHA_PRIVATE_KEY = ''
 
 #X_FRAME_OPTIONS = 'SAMEORIGIN' # Необходимо было для ыгььуктщеу но может и понадобиться ckeditor
 
