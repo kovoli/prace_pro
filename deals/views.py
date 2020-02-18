@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404, HttpResponseRedirect, reverse
+from django.shortcuts import render, get_object_or_404, HttpResponseRedirect, reverse, redirect
 from .models import Deal, Category, Shop, Comment, Brand
 from django.contrib.auth.models import User
 from django.http import HttpResponse, JsonResponse
@@ -133,12 +133,15 @@ def deals_by_shop(request, slug):
 
 def search_deals(request):
     if 'q' in request.GET:
-        q = request.GET['q']
-        search_list = watson.filter(Deal.objects.prefetch_related('comments', 
-                                                                  'user_like',
-                                                                  'author__profile',
-                                                                  'shop'), q)
-        deals_list = helpers.pg_records(request, search_list, 54)
+        if request.GET['q'] != '':
+            q = request.GET['q']
+            search_list = watson.filter(Deal.objects.prefetch_related('comments',
+                                                                      'user_like',
+                                                                      'author__profile',
+                                                                      'shop'), q)
+            deals_list = helpers.pg_records(request, search_list, 25)
+        else:
+            return redirect(request.META['HTTP_REFERER'])
     return render(request, 'deals/search_deals.html', {'q': q, 'deals_list': deals_list})
 
 

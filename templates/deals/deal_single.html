@@ -2,6 +2,7 @@
 {% load mptt_tags %}
 {% load widget_tweaks %}
 {% load deals_tags %}
+{% load static %}
 
 {% block title %}{{ deal.name }}{% endblock %}
 
@@ -94,8 +95,14 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="comment-box__image border-bottom pb-1">
-                                <img src="http://placehold.it/40x40" alt="product image" class="img-fluid rounded-circle">
-                                <span class="author-deal ml-2"><a href="#">{{ comment.author.username }}</a></span>
+                                {% if request.user.profile.photo %}
+                                    <img src="{{ request.user.profile.photo.url }}" alt="Комментарий от пользователя {{ request.user }}" class="img-fluid rounded-circle comment-image">
+                                {% else %}
+                                    <img src="{% static 'images/profile_logo.png' %}" alt="Комментарий от пользователя {{ request.user }}" class="img-fluid rounded-circle comment-image">
+                                {%  endif %}
+                                {% if comment.author %}
+                                    <span class="author-deal ml-2"><a href="{{ comment.author.profile.get_absolute_url }}">{{ comment.author.username }}</a></span>
+                                {% endif %}
                                 <span class="deal-post-date ml-2"><i class="far fa-clock"></i> {{ comment.created|timesince }} <small class="text-muted">назад</small> </span>
                                 <button type="button" class="btn btn-like-comment focus shadow-none like_comment float-right" data-id="{{ comment.id }}"><i class="far fa-thumbs-up"></i> <span class="counter_like_{{ comment.id }}">{{ comment.like }}</span></button>
                             </div>
@@ -110,7 +117,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="not_comments text-center">
-                                <span><i class="fas fa-comment-slash"></i> Что ты думаеш о {{ deal.name }}</span>
+                                <span><i class="fas fa-comment-slash"></i> Скажи своё мнение!</span>
                             </div>
                         </div>
                     </div>
@@ -151,7 +158,9 @@
                 </div>
                 <ul class="list-group list-group-flush">
                   {% for category in categories %}
-                    <li class="list-group-item sidebar"><a href="{{ category.get_absolute_url }}">{{ category.name }}</a></li>
+                      <li class="list-group-item sidebar">
+                        <a href="{{ category.get_absolute_url }}" class="text-decoration-none">{{ category.name }}</a>
+                      </li>
                   {% endfor %}
                 </ul>
                 </div>

@@ -103,7 +103,9 @@
                     </div>
                         <ul class="list-group list-group-flush">
                             {% for category in categories %}
-                              <li class="list-group-item"><a href="{{ category.get_absolute_url }}">{{ category.name }}</a></li>
+                               <li class="list-group-item sidebar">
+                                   <a href="{{ category.get_absolute_url }}" class="text-decoration-none">{{ category.name }}</a>
+                               </li>
                             {% endfor %}
                         </ul>
                     </div>

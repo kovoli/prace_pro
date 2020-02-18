@@ -10,6 +10,7 @@ a:hover {
 }
 h1 {
     font-size: 1.6rem;
+    font-weight: 600;
 }
 .bg-own {
     background-color: #155596;
@@ -249,7 +250,9 @@ a .btn-outline-own  {
     color: #fff;
     background-color: #1d629a;
 }
-
+.comment-image {
+    max-height: 40px;
+}
 /* Pagination */
 .page-item.active .page-link {
     color: #fff;
