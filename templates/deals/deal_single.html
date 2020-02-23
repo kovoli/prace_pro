@@ -172,9 +172,13 @@
                     <div class="sidebar-slider">
                             {% for semi in semilar_products %}
                             <div class="single-recent-post d-flex align-items-center">
-                                <a href="{{ semi.get_absolute_url }}" class="single-recent-post__thumb">
-                                    <img src="http://placehold.it/60x60" alt="Blog Thumb">
-                                </a>
+                                <div class="sidebar-image d-flex align-items-center justify-content-center">
+                                    {% if semi.image %}
+                                        <a href="{{ semi.get_absolute_url }}"><img src="{{ semi.image.url }}" alt="{{ semi.name }}" class="img-fluid image-sidebar"></a>
+                                    {% else %}
+                                        <a href="{{ semi.get_absolute_url }}"><img src="http://placehold.it/60x60" alt="product image" class="img-fluid"></a>
+                                    {% endif %}
+                                </div>
                                 <div class="single-recent-post__content">
                                     <a href="{{ semi.get_absolute_url }}" class="single-recent-post__title text-decoration-none">{{ semi.like_counter }} <span class="like-heart border-right pr-1"><i class="fas fa-heartbeat"></i></span> {{ semi.name|truncatechars:25 }}</a>
                                     <span class="sidebar-price">{{ semi.price }} <i class="fas fa-ruble-sign"></i></span>

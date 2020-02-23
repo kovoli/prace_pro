@@ -21,7 +21,7 @@ class Shop(models.Model):
     link_to_shop = models.URLField(blank=True, null=True)  # TODO Убрать при Production
     favorites = models.BooleanField(default=False)
     shop_image = ProcessedImageField(upload_to='shop_images/%Y/%m',
-                                     processors=[ResizeToFit(None, 250)],
+                                     processors=[ResizeToFit(None, 100)],
                                      format='JPEG',
                                      options={'quality': 80},
                                      blank=True,

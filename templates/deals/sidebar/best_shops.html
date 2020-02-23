@@ -1,10 +1,15 @@
+{% load static %}
 {% for shop in favorite_shops %}
 <div class="single-recent-post d-flex align-items-center">
-    <a href="" class="single-recent-post__thumb">
-        <img src="http://placehold.it/60x60" alt="Blog Thumb">
-    </a>
+    <div class="sidebar-image d-flex align-items-center justify-content-center">
+        {% if shop.shop_image %}
+            <a href="{{ shop.get_absolute_url }}"><img src="{{ shop.shop_image.url }}" alt="Скидки в {{ shop.name }}" class="img-fluid image-sidebar"></a>
+        {% else %}
+            <a href="{{ shop.get_absolute_url }}"><img src="{% static 'images/shop.png' %}" alt="Скидки в {{ shop.name }}" class="img-fluid image-sidebar"></a>
+        {% endif %}
+    </div>
     <div class="single-recent-post__content">
-        <a href="" class="single-recent-post__title text-decoration-none">{{ shop.name }}</a>
+        <a href="{{ shop.get_absolute_url }}" class="single-recent-post__title text-decoration-none text-uppercase">{{ shop.name }}</a>
     </div>
 </div>
 {% endfor %}

@@ -75,7 +75,7 @@
                                 <div>
                                     <span></span>
                                 </div>
-                                <p class="product-box__short-desc">{{ deal.description|safe|truncatechars:155|striptags }}</p>
+                                <p class="product-box__short-desc">{{ deal.description|safe|truncatechars_html:155|striptags }}</p>
                             </div>
                         </div>
                     </div>
