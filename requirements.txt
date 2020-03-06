@@ -20,3 +20,4 @@ six
 sqlparse
 text-unidecode
 Unidecode
+scrapy-proxycrawl-middleware

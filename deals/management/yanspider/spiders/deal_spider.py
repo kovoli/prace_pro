@@ -41,7 +41,7 @@ class AmazonSpider(scrapy.Spider):
         data['name'] = response.css('div.n-title__text h1::text').get()
         data['price'] = self.clean_price_to_int(response.css('div.n-product-price-cpa2__price span::text').get())
         data['oldprice'] = self.clean_price_to_int(response.css('div.n-product-default-offer__old-price-cpa2 span::text').get())
-        data['description'] = response.css('ul.n-product-spec-list li').getall()
+        data['description'] = response.css('ul.n-product-spec-list').get()
         data['image'] = 'https:' + response.css('div.n-gallery__item img::attr(src)').get()
         data['brand'] = response.css('span.n-product-summary__brand-text-all-products-brandname::text').get()
         data['shop'] = self.shop
