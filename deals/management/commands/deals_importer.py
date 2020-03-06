@@ -9,8 +9,6 @@ from urllib.request import urlopen
 
 # ----- Main Command -----
 class Command(BaseCommand):
-    def add_arguments(self, parser):
-        parser.add_argument('file_name', type=str, help='Название файла')
 
     def handle(self, *args, **kwargs):
         data = {'name': 'deal_name',
